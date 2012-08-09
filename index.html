@@ -1,0 +1,210 @@
+<html>
+	<head>
+		<title>DomoJS</title>
+		<link rel="stylesheet" href="css/domojs-256.css">
+		<link rel="stylesheet" href="css/domojs-128.css">
+		<link rel="stylesheet" href="css/domojs-32.css">
+		<link type="text/css" href="../ir-blaster/css/redmond/jquery-ui-1.8.19.custom.css" rel="stylesheet" />
+		<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+		<script type="text/javascript" src="js/jquery-ui-1.8.19.min.js"></script>
+		<style type="text/css">
+			body, a
+			{
+				margin:0;
+				font-family:Segoe UI, Arial;
+				background-color:#1B534E;
+				color:white;
+				text-decoration:none;
+			}
+			
+			h1, body > div
+			{
+				margin-left:50px;
+				margin-top:50px;
+			}
+			
+			.block
+			{
+				float:left;
+			}
+			
+			.icon-128
+			{
+				background-image: url("img/domojs-128.png");
+			}
+			.icon-32
+			{
+				background-image: url("img/domojs-32.png");
+			}
+			.icon-256
+			{
+				background-image: url("img/domojs-256.png");
+			}
+			
+			.block-noimg
+			{
+				background-image:none;
+			}
+			
+			.block-128
+			{
+				width:128px;
+				height:128px;				
+			}
+			
+			.block-256, .block-text
+			{
+				background-color:#1B7EC3;
+				float:left;
+				margin:3px;
+				width:256px;
+				height:256px;
+				font-size:20pt;
+				border:3px solid transparent;
+				background-repeat: no-repeat;   
+			}
+			
+			.block-text
+			{
+				vertical-align:bottom;
+				padding:210px 20px;
+				padding-bottom:0;
+				width:216px;
+				height:46px;
+				font-size:20pt;
+			}
+			
+			#toolbar .block
+			{
+				width:32px;
+				height:32px;
+				padding:0;
+			}
+			
+			.block:hover
+			{
+				border-color:#ccc;
+			}
+			
+			.previous
+			{
+				margin-left:35px;
+				margin-right:20px;
+				background-image:url('img/previous.png');
+				width:48px;
+				height:48px;
+				display:none;
+				float:left;
+			}
+		</style>
+	</head>
+	<script type="text/javascript">
+		window.onhashchange=function(){
+			loadContent(location.hash);
+		};
+		
+		function loadContent(hash)
+		{
+			var url;
+			if(hash)
+				url=hash.substr(1);
+			if(!url)
+				url='domojs';
+			var ajax=loadJson(url);
+			$.extend(ajax, {complete:function(jqXHR, textStatus) {
+				if(jqXHR.status==404)
+				{
+					ajax=loadHtml(url);
+					$.ajax(ajax);
+				}			
+			}});
+			$.ajax(ajax);			
+		}
+		
+		function loadJson(url)
+		{
+			return {url:url+'.json', dataType:'json', success:function(json){
+				if(url=='domojs')
+					$('.previous').hide();
+				else
+					$('.previous').show();
+				
+				$('body > div:first').empty().append(BuildBlock(json, 512).children());
+			}}
+		}
+		
+		function BuildBlock(item, size)
+		{
+			if(!size)
+				size=256;
+			var block;
+			if($.isArray(item))
+			{
+				block=$('<div class="block block-'+size+' block-noimg"></div>');
+				var blocks=null;
+				$.each(item, function(){
+					var block=BuildBlock(this, size/2);
+					if(!blocks)
+						blocks=block;
+					else
+						blocks=blocks.add(block);
+				});
+				block.append(blocks);
+			}
+			else
+			{
+				block=$('<div class="block block-'+size+' icon-'+size+' block-noimg"></div>');
+				if(item.name)
+					block.text(item.name);
+				if(item.text)
+					block.addClass('block-text').text(item.text);
+				if(item.icon)
+					block.addClass('icon-'+item.icon+'-'+size).removeClass('block-noimg');
+				if(item.background)
+					block.css({'background-image': 'url('+item.background+')', 'background-position':'center center'});
+				if(item.url)
+					block.click(function(){ window.location=item.url; });
+				else
+					block.click(function(){ $.get(item.cmd); });
+			}
+			
+			return block;
+		}
+		
+		function loadHtml(url)
+		{
+			return {url:url+'.html', success:function(html){
+				if(url=='domojs')
+					$('.previous').hide();
+				else
+					$('.previous').show();
+				html=$(html);
+				var head=html.find('header');
+				var title=head.find('title').text();
+				if(title=='')
+				{
+					if(url=='domojs')
+						title="DomoJS";
+					else
+						title=url.substr(url.indexOf('/')+1, -1)
+				}
+				$('h1').text(title);
+				if(head.length>0)
+					$('head').append(head.children().not('title, script'));
+				var body=html.find('article');
+				if(body.length==0)
+					body=html;
+				$('body > div:first').html(body.not('script'));
+				html.filter('script').add(html.find('script')).appendTo('head');
+			}};
+		}
+		
+		$(function(){ loadContent(location.hash); });
+	</script>
+	<body>
+		<a href="#domojs" class="previous"></a>
+		<h1>DomoJS</h1>
+		<div>
+		</div>
+	</body>
+</html>

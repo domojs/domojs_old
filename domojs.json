@@ -1,0 +1,7 @@
+[
+	{"text":"Télécommande", "icon":"remote", "url":"#ir-blaster"},
+	{"text":"Volets","icon":"window", "url":"#gpio-blaster"},
+	{"text":"Scenarii", "icon":"code", "url":"#scenarii" },
+	{"text":"Evènements","icon":"event", "url":"#events"},
+	{"text":"Configuration", "icon":"gears", "url":"#config"}
+]

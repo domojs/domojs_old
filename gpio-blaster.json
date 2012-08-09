@@ -1,0 +1,30 @@
+[[
+	{"icon":"stop", "cmd":"/api/gpio-blaster/stop/0"},
+	{"icon":"up", "cmd":"/api/gpio-blaster/up/0"},
+	{"name":"Salle - Salon"},
+	{"icon":"down", "cmd":"/api/gpio-blaster/down/0"}
+],
+[
+	{"icon":"stop", "cmd":"/api/gpio-blaster/stop/1"},
+	{"icon":"up", "cmd":"/api/gpio-blaster/up/1"},
+	{"name":"Rez-de-chaussée"},
+	{"icon":"down", "cmd":"/api/gpio-blaster/down/1"}
+],
+[
+	{"icon":"stop", "cmd":"/api/gpio-blaster/stop/2"},
+	{"icon":"up", "cmd":"/api/gpio-blaster/up/2"},
+	{"name":"Sdb - Chambre d'amis"},
+	{"icon":"down", "cmd":"/api/gpio-blaster/down/2"}
+],
+[
+	{"icon":"stop", "cmd":"/api/gpio-blaster/stop/3"},
+	{"icon":"up", "cmd":"/api/gpio-blaster/up/3"},
+	{"name":"Tous sauf chambre"},
+	{"icon":"down", "cmd":"/api/gpio-blaster/down/3"}
+],
+[
+	{"icon":"stop", "cmd":"/api/gpio-blaster/stop/4"},
+	{"icon":"up", "cmd":"/api/gpio-blaster/up/4"},
+	{"name":"Tous"},
+	{"icon":"down", "cmd":"/api/gpio-blaster/down/4"}
+]]

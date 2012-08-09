@@ -1,0 +1,45 @@
+#container li {
+background-image: url("domojs.png");
+    background-repeat: no-repeat;   
+    list-style: none outside none;
+}	
+.icon-door-32{background-position:0 0 ; width: 32px ; height: 32px; }
+.icon-user-32{background-position:-42 0 ; width: 32px ; height: 32px; }
+.icon-down-32{background-position:-84 0 ; width: 32px ; height: 32px; }
+.icon-right-32{background-position:-126 0 ; width: 32px ; height: 32px; }
+.icon-left-32{background-position:-168 0 ; width: 32px ; height: 32px; }
+.icon-up-32{background-position:-210 0 ; width: 32px ; height: 32px; }
+.icon-code-32{background-position:-252 0 ; width: 32px ; height: 32px; }
+.icon-back-32{background-position:-294 0 ; width: 32px ; height: 32px; }
+.icon-eject-32{background-position:-336 0 ; width: 32px ; height: 32px; }
+.icon-ffw-32{background-position:-378 0 ; width: 32px ; height: 32px; }
+.icon-pause-32{background-position:-420 0 ; width: 32px ; height: 32px; }
+.icon-play-32{background-position:-462 0 ; width: 32px ; height: 32px; }
+.icon-power-32{background-position:-504 0 ; width: 32px ; height: 32px; }
+.icon-stop-32{background-position:-546 0 ; width: 32px ; height: 32px; }
+.icon-Medium-Thumbnail-View-32{background-position:-588 0 ; width: 32px ; height: 32px; }
+.icon-submit-32{background-position:-630 0 ; width: 32px ; height: 32px; }
+.icon-synchronize-32{background-position:-672 0 ; width: 32px ; height: 32px; }
+.icon-calendar-32{background-position:-714 0 ; width: 32px ; height: 32px; }
+.icon-gears-32{background-position:-756 0 ; width: 32px ; height: 32px; }
+.icon-video-32{background-position:-798 0 ; width: 32px ; height: 32px; }
+.icon-wizard-32{background-position:-840 0 ; width: 32px ; height: 32px; }
+.icon-add-32{background-position:-882 0 ; width: 32px ; height: 32px; }
+.icon-alarm-32{background-position:-924 0 ; width: 32px ; height: 32px; }
+.icon-cancel-32{background-position:-966 0 ; width: 32px ; height: 32px; }
+.icon-close-32{background-position:-1008 0 ; width: 32px ; height: 32px; }
+.icon-download-32{background-position:-1050 0 ; width: 32px ; height: 32px; }
+.icon-edit-32{background-position:-1092 0 ; width: 32px ; height: 32px; }
+.icon-home-32{background-position:-1134 0 ; width: 32px ; height: 32px; }
+.icon-properties-32{background-position:-1176 0 ; width: 32px ; height: 32px; }
+.icon-shield-32{background-position:-1218 0 ; width: 32px ; height: 32px; }
+.icon-Finger-print-32{background-position:-1260 0 ; width: 32px ; height: 32px; }
+.icon-event-32{background-position:-1302 0 ; width: 32px ; height: 32px; }
+.icon-upload-32{background-position:-1344 0 ; width: 32px ; height: 32px; }
+.icon-fridge-32{background-position:-1386 0 ; width: 32px ; height: 32px; }
+.icon-washing-machine-32{background-position:-1428 0 ; width: 32px ; height: 32px; }
+.icon-laptop-32{background-position:-1470 0 ; width: 32px ; height: 32px; }
+.icon-remote-32{background-position:-1512 0 ; width: 32px ; height: 32px; }
+.icon-speaker-32{background-position:-1554 0 ; width: 32px ; height: 32px; }
+.icon-tv-32{background-position:-1596 0 ; width: 32px ; height: 32px; }
+.icon-window-32{background-position:-1638 0 ; width: 32px ; height: 32px; }

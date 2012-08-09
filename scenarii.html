@@ -1,0 +1,72 @@
+<section>
+<header>
+<title>Scenarii</title>
+<link rel="stylesheet" href="../scenarii/css/codemirror.css">
+<script type="text/javascript" src="../scenarii/js/codemirror.js"></script>
+<script type="text/javascript" src="../scenarii/js/javascript.js"></script>
+<style type="text/css">
+	#toolbar, #content-editor
+	{
+		border:1px solid black;
+	}
+	
+	#toolbar, #content-editor, .CodeMirror
+	{
+		background-color:white;
+		width:1024px;
+	}
+	
+	body, a
+	{
+		margin:0;
+		font-family:Segoe UI, Arial;
+		background-color:#1B534E;
+		color:white;
+		text-decoration:none;
+	}
+	
+	#content-editor
+	{
+		color:black;
+	}
+	
+	#toolbar
+	{
+		background-color:#eee;
+		height:40px;
+		border-bottom-width:0;
+	}
+	
+	#toolbar a
+	{
+		background-color:#1B7EC3;
+		float:left;
+		margin:3px;
+		vertical-align:bottom;
+		background-image: url("../domojs/img/domojs-32.png");
+		background-repeat: no-repeat;   
+		border:1px solid transparent;
+		display:block
+	}
+	
+	#toolbar a:hover
+	{
+		border-color:#ccc;
+	}
+</style>
+</header>
+<article>
+	<div id="toolbar">
+		<a class="block icon-upload-32" href="#">
+		</a>
+		<a class="block icon-cancel-32" href="#">
+		</a>
+	</div>
+	<div id="content-editor">
+		<textarea id="editor">$('domo').on('2012-08-04 11:00', function() { alert('pwic'); });</textarea>
+	</div>
+	<script type="text/javascript">
+		CodeMirror.fromTextArea($('#editor')[0], {lineNumbers:true, matchBrackets:true});
+	</script>
+</article>
+</section>
