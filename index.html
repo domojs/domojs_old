@@ -162,13 +162,27 @@
 					block.addClass('icon-'+item.icon+'-'+size).removeClass('block-noimg');
 				if(item.background)
 					block.css({'background-image': 'url('+item.background+')', 'background-position':'center center'});
+				
 				if(item.url)
 					block.click(function(){ window.location=item.url; });
-				else
-					block.click(function(){ $.get(item.cmd); });
+				elseif(typeof(item.cmd)!='undefined')
+				{
+					if(typeof(item.cmd.ajax)=='undefined')
+					{
+						queryData(item.cmd);
+					}
+					else
+						block.click(function(){ $.get(item.cmd); });
+				}
 			}
 			
 			return block;
+		}
+		
+		function queryData(cmd)
+		{
+			var dialog=$('<div></div>');
+			dialog.dialog({buttons:{OK:function(){ $.ajax($.extend(cmd.ajax, {data:$.dialog})) } } });
 		}
 		
 		function loadHtml(url)

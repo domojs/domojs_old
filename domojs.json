@@ -3,5 +3,8 @@
 	{"text":"Volets","icon":"window", "url":"#gpio-blaster"},
 	{"text":"Scenarii", "icon":"code", "url":"#scenarii" },
 	{"text":"Evènements","icon":"event", "url":"#events"},
-	{"text":"Configuration", "icon":"gears", "url":"#config"}
+	{"text":"Cuisine","icon":"cooking", "url":"#cooking"},
+	{"text":"Courses","icon":"shopping", "url":"#shopping"},
+	{"text":"Stock","icon":"fridge", "url":"#stock"},
+	{"text":"Cameras","icon":"camera", "url":"#security"}
 ]

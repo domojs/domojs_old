@@ -1,0 +1,93 @@
+var tableService;
+
+var tableName='stock';
+
+var map=function(item){
+	return { color:item.Category, subBlocks:[{icon:"plus", cmd:{url:'/api/'+tableName+'/increase/'+item.RowKey, dataType:'json', refresh:'parent'}}, {icon:'minus', cmd:{url:'/api/'+tableName+'/decrease/'+item.RowKey, dataType:'json', refresh:'parent'}}, {name:decodeURIComponent(item.RowKey)}, {name:item.Quantity}] };
+};
+
+var list=function(req,res,japi)
+{
+	console.log('querying data');
+	var query = $('azure').TableQuery
+    .select()
+    .from(tableName);
+	
+	tableService.queryEntities(query, function(error, entities){
+		if(!error){
+			//entities contains an array of entities
+			if(!$.isArray(entities))
+				entities=[entities];
+			entities=$.map(entities, map);
+			entities.unshift({
+				text:"Ajouter", 
+				icon:'add',
+				cmd:{
+					"name":{displayText:"Nom de la recette", isRequired:true}, 
+					"quantity":{displayText:"Quantité"}, 
+					"category":{displayText:"Catégorie"}, 
+					"ajax":{"type":'PUT', "url":'/api/'+tableName}
+					}
+			
+			});
+			
+			japi(entities);			
+		}
+		else
+			japi(error);
+		
+	});
+}
+
+var add=function(req,res,japi)
+{
+	req.setEncoding('utf8');
+	req.on('data', function(form){
+		console.log(form);
+		var data=$('querystring').parse(form);
+		tableService.insertEntity(tableName, { PartitionKey:'dna', RowKey:data.name, Quantity:Number(data.quantity) || 0,  Category:data.category },
+		function(error){
+			if(error)
+				return japi(error);
+			japi('OK');
+		});
+	});
+}
+
+var increase=function(req,res,japi)
+{
+	req.params.name=encodeURIComponent(req.params.name);
+	tableService.queryEntity(tableName, 'dna', req.params.name, function(error, entity){
+		if(error)
+			return japi({message:"Error while querying data : dna|"+req.params.name, error:error});
+		tableService.mergeEntity(tableName, $.extend(entity, {RowKey:encodeURIComponent(entity.RowKey), Quantity:Number(entity.Quantity)+1}), function(error){
+			if(error)
+				return japi({message:"Error while merging entity", error:error});
+			japi(map(entity));
+		});
+	});
+}
+
+var decrease=function(req,res,japi)
+{
+req.params.name=encodeURIComponent(req.params.name);
+	tableService.queryEntity(tableName, 'dna', req.params.name, function(error, entity){
+		if(error)
+			return japi({message:"Error while querying data : dna|"+req.params.name, error:error});
+		tableService.mergeEntity(tableName, $.extend(entity, {RowKey:encodeURIComponent(entity.RowKey), Quantity:Number(entity.Quantity)-1}), function(error){
+			if(error)
+				return japi({message:"Error while merging entity", error:error});
+			japi(map(entity));
+		});
+	});}
+
+
+exports.init=function(config)
+{
+	$.get('/api/'+tableName, list);
+	$.put('/api/'+tableName, add);
+	$.get('/api/'+tableName+'/increase/{name}', increase);
+	$.get('/api/'+tableName+'/decrease/{name}', decrease);
+	tableService=$('azure').createTableService(config.accountName, config.accountKey);
+	tableService.createTableIfNotExists(tableName, function(){});
+}
