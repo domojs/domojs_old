@@ -3,7 +3,7 @@ background-image: url("domojs.png");
     background-repeat: no-repeat;   
     list-style: none outside none;
 }	
-.icon-door-256{background-position:0 0 ; width: 256px ; height: 256px; }
+.icon-cooker-256{background-position:0 0 ; width: 256px ; height: 256px; }
 .icon-user-256{background-position:-266 0 ; width: 256px ; height: 256px; }
 .icon-down-256{background-position:-532 0 ; width: 256px ; height: 256px; }
 .icon-right-256{background-position:-798 0 ; width: 256px ; height: 256px; }
@@ -43,3 +43,10 @@ background-image: url("domojs.png");
 .icon-speaker-256{background-position:-9842 0 ; width: 256px ; height: 256px; }
 .icon-tv-256{background-position:-10108 0 ; width: 256px ; height: 256px; }
 .icon-window-256{background-position:-10374 0 ; width: 256px ; height: 256px; }
+.icon-door-256{background-position:-10640 0 ; width: 256px ; height: 256px; }
+.icon-Volume-up-256{background-position:-10906 0 ; width: 256px ; height: 256px; }
+.icon-Volume-down-256{background-position:-11172 0 ; width: 256px ; height: 256px; }
+.icon-shopping-256{background-position:-11438 0 ; width: 256px ; height: 256px; }
+.icon-minus-256{background-position:-11704 0 ; width: 256px ; height: 256px; }
+.icon-plus-256{background-position:-11970 0 ; width: 256px ; height: 256px; }
+.icon-camera-256{background-position:-12236 0 ; width: 256px ; height: 256px; }

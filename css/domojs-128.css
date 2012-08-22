@@ -1,4 +1,9 @@
-.icon-door-128{background-position:0 0 ; width: 128px ; height: 128px; }
+#container li {
+background-image: url("domojs.png");
+    background-repeat: no-repeat;   
+    list-style: none outside none;
+}	
+.icon-cooker-128{background-position:0 0 ; width: 128px ; height: 128px; }
 .icon-user-128{background-position:-138 0 ; width: 128px ; height: 128px; }
 .icon-down-128{background-position:-276 0 ; width: 128px ; height: 128px; }
 .icon-right-128{background-position:-414 0 ; width: 128px ; height: 128px; }
@@ -38,3 +43,10 @@
 .icon-speaker-128{background-position:-5106 0 ; width: 128px ; height: 128px; }
 .icon-tv-128{background-position:-5244 0 ; width: 128px ; height: 128px; }
 .icon-window-128{background-position:-5382 0 ; width: 128px ; height: 128px; }
+.icon-door-128{background-position:-5520 0 ; width: 128px ; height: 128px; }
+.icon-Volume-up-128{background-position:-5658 0 ; width: 128px ; height: 128px; }
+.icon-Volume-down-128{background-position:-5796 0 ; width: 128px ; height: 128px; }
+.icon-shopping-128{background-position:-5934 0 ; width: 128px ; height: 128px; }
+.icon-minus-128{background-position:-6072 0 ; width: 128px ; height: 128px; }
+.icon-plus-128{background-position:-6210 0 ; width: 128px ; height: 128px; }
+.icon-camera-128{background-position:-6348 0 ; width: 128px ; height: 128px; }

@@ -3,7 +3,7 @@ background-image: url("domojs.png");
     background-repeat: no-repeat;   
     list-style: none outside none;
 }	
-.icon-door-32{background-position:0 0 ; width: 32px ; height: 32px; }
+.icon-cooker-32{background-position:0 0 ; width: 32px ; height: 32px; }
 .icon-user-32{background-position:-42 0 ; width: 32px ; height: 32px; }
 .icon-down-32{background-position:-84 0 ; width: 32px ; height: 32px; }
 .icon-right-32{background-position:-126 0 ; width: 32px ; height: 32px; }
@@ -43,3 +43,10 @@ background-image: url("domojs.png");
 .icon-speaker-32{background-position:-1554 0 ; width: 32px ; height: 32px; }
 .icon-tv-32{background-position:-1596 0 ; width: 32px ; height: 32px; }
 .icon-window-32{background-position:-1638 0 ; width: 32px ; height: 32px; }
+.icon-door-32{background-position:-1680 0 ; width: 32px ; height: 32px; }
+.icon-Volume-up-32{background-position:-1722 0 ; width: 32px ; height: 32px; }
+.icon-Volume-down-32{background-position:-1764 0 ; width: 32px ; height: 32px; }
+.icon-shopping-32{background-position:-1806 0 ; width: 32px ; height: 32px; }
+.icon-minus-32{background-position:-1848 0 ; width: 32px ; height: 32px; }
+.icon-plus-32{background-position:-1890 0 ; width: 32px ; height: 32px; }
+.icon-camera-32{background-position:-1932 0 ; width: 32px ; height: 32px; }

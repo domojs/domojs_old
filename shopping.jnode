@@ -24,8 +24,8 @@ var list=function(req,res, next)
 				icon:'add',
 				cmd:{
 					"name":{displayText:"Nom de la recette", isRequired:true}, 
-					"quantity":{displayText:"Quantité"}, 
-					"category":{displayText:"Catégorie"}, 
+					"quantity":{displayText:"QuantitÃ©"}, 
+					"category":{displayText:"CatÃ©gorie"}, 
 					"ajax":{"type":'PUT', "url":'/api/'+tableName}
 					}
 			
