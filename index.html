@@ -58,7 +58,7 @@
 			
 			.block-256, .block-text
 			{
-				background-color:#1B7EC3;
+				background-color:#1BA1E2;
 				float:left;
 				margin:3px;
 				width:256px;
@@ -100,6 +100,18 @@
 				display:none;
 				float:left;
 			}
+			
+			.block-blue { background-color:#1BA1E2; }
+			.block-brown { background-color:#A05000; }
+			.block-green { background-color:#339933; }
+			.block-lime { background-color:#A2C139; }
+			.block-magenta { background-color:#D80073; }
+			.block-orange { background-color:#F09609; }
+			.block-pink { background-color:#E671B8; }
+			.block-purple { background-color:#A200FF; }
+			.block-red { background-color:#E51400; }
+			.block-viridian { background-color:#00ABA9; }
+			
 		</style>
 	</head>
 	<script type="text/javascript">
@@ -120,7 +132,7 @@
 				{
 					ajax=loadHtml(url);
 					$.ajax(ajax);
-				}			
+				}
 			}});
 			$.ajax(ajax);			
 		}
@@ -129,7 +141,10 @@
 		{
 			return {url:url+'.json', dataType:'json', success:function(json){
 				if(url=='domojs')
+				{
 					$('.previous').hide();
+					$('h1').text('DomoJS');
+				}
 				else
 					$('.previous').show();
 				
@@ -158,8 +173,11 @@
 			else
 			{
 				if(item.subBlocks)
-					return BuildBlock(item.subBlocks, size).addClass('icon-'+size);
-				block=$('<div class="block block-'+size+' icon-'+size+' block-noimg"></div>');
+					block= BuildBlock(item.subBlocks, size).addClass('icon-'+size);
+				else
+					block=$('<div class="block block-'+size+' icon-'+size+' block-noimg"></div>');
+				if(item.color)
+					block.addClass('block-'+item.color);
 				if(item.name)
 					block.text(item.name);
 				if(item.text)
@@ -170,7 +188,9 @@
 					block.css({'background-image': 'url('+item.background+')', 'background-position':'center center'});
 				
 				if(item.url)
-					block.click(function(){ window.location=item.url; });
+					block.click(function(){
+					$('h1').text(item.name || item.text);
+					window.location=item.url; });
 				else if(typeof(item.cmd)!='undefined')
 				{
 					if(typeof(item.cmd.ajax)!='undefined')
@@ -201,7 +221,7 @@
 				{
 					if(key=='ajax')
 						continue;
-					if(cmd[key].isRequired)
+					if(cmd[key].isRequired && !$('#'+key).val())
 					{
 						$('<div></div>').html('Vous n\'avez pas saisi la valeur du champ <i>'+cmd[key].displayText+'</i>').dialog({dialogClass:'alert', width:'100%', height:'150', resizable:false, modal:true, buttons:{OK:function(){ $(this).dialog('close') }}});
 						return;
