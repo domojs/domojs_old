@@ -176,37 +176,81 @@
 					block= BuildBlock(item.subBlocks, size).addClass('icon-'+size);
 				else
 					block=$('<div class="block block-'+size+' icon-'+size+' block-noimg"></div>');
-				if(item.color)
-					block.addClass('block-'+item.color);
-				if(item.name)
-					block.text(item.name);
-				if(item.text)
-					block.addClass('block-text').text(item.text);
-				if(item.icon)
-					block.addClass('icon-'+item.icon+'-'+size).removeClass('block-noimg');
-				if(item.background)
-					block.css({'background-image': 'url('+item.background+')', 'background-position':'center center'});
-				
-				if(item.url)
-					block.click(function(){
-					$('h1').text(item.name || item.text);
-					window.location=item.url; });
-				else if(typeof(item.cmd)!='undefined')
-				{
-					if(typeof(item.cmd.ajax)!='undefined')
-					{
-						block.click(function(){ queryData(item); });
-					}
-					else
-						block.click(function(){ $.get(item.cmd); });
-				}
+				updateBlock(block, item, size);
 			}
 			
 			return block;
 		}
 		
+		function updateBlock(block, item, size)
+		{
+			if(item.subBlocks)
+				block.empty().append(BuildBlock(item.subBlocks, size).children());
+			if(item.color)
+				block.addClass('block-'+item.color);
+			if(item.name)
+				block.text(item.name);
+			if(item.text)
+				block.addClass('block-text').text(item.text);
+			if(item.icon)
+				block.addClass('icon-'+item.icon+'-'+size).removeClass('block-noimg');
+			if(item.background)
+				block.css({'background-image': 'url('+item.background+')', 'background-position':'center center'});
+			
+			if(item.url)
+				block.click(function(){
+				$('h1').text(item.name || item.text);
+				window.location=item.url; });
+			else if(typeof(item.cmd)!='undefined')
+			{
+				if(typeof(item.cmd.ajax)!='undefined')
+				{
+					block.click(function(){ queryData.apply(this, item); });
+				}
+				else if($.isPlainObject(item.cmd))
+				{						
+					if(item.cmd.refresh)
+						refresh(item.cmd.refresh, item.cmd.ajax || item.cmd, block);
+					block.click(function(){ $.ajax(item.cmd.ajax || item.cmd); });
+				}
+				else
+					block.click(function(){ $.get(item.cmd); });
+			}
+		}
+		
+		function refresh(mode, ajax, block)
+		{
+			var success;
+			switch(mode)
+			{
+				case 'self':
+					success=function(data){
+						updateBlock(block, data);
+					}
+					break;
+				case 'parent':
+					success=function(data){
+						updateBlock(block.parent(), data);
+					}
+					break;
+				case 'all':
+					success=function(data){
+						if(data)
+							loadJson(mode).success(data);
+						else
+							loadContent(location.hash);
+					}
+					break;
+			}
+			if(ajax.success)
+				ajax.success=[ajax.success, success];
+			else
+				ajax.success=success;
+		}
+		
 		function queryData(item)
 		{
+			var block=$(this);
 			var cmd=item.cmd;
 			var dialog=$('<div></div>');
 			for(var key in cmd)
@@ -226,6 +270,10 @@
 						$('<div></div>').html('Vous n\'avez pas saisi la valeur du champ <i>'+cmd[key].displayText+'</i>').dialog({dialogClass:'alert', width:'100%', height:'150', resizable:false, modal:true, buttons:{OK:function(){ $(this).dialog('close') }}});
 						return;
 					}
+				}
+				if(cmd.ajax.refresh)
+				{
+					refresh(cmd.ajax.refresh, cmd.ajax, block);
 				}
 				$.ajax($.extend(cmd.ajax, {data:dialog.find(':input').serializeArray()})); 
 				$(this).dialog('close');

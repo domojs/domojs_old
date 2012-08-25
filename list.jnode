@@ -36,9 +36,9 @@ var ListManager=function(tableName)
 				
 				});
 				
-				res.set('ETag', response.body.updated);
+				res.setHeader('ETag', response.body.updated);
 
-				res.send(entities);			
+				res.send(entities);	
 			}
 			else
 				next(error);
@@ -77,7 +77,7 @@ var ListManager=function(tableName)
 
 	this.decrease=function(req,res,next)
 	{
-	req.params.name=encodeURIComponent(req.params.name);
+		req.params.name=encodeURIComponent(req.params.name);
 		tableService.queryEntity(tableName, 'dna', req.params.name, function(error, entity){
 			if(error)
 				return next({message:"Error while querying data : dna|"+req.params.name, error:error});
@@ -98,8 +98,8 @@ exports.init=function(config)
 		var listManager=new ListManager(tableName); 
 		$.get('/api/'+tableName, listManager.list);
 		$.put('/api/'+tableName, listManager.add);
-		$.get('/api/'+tableName+'/increase/{name}', listManager.increase);
-		$.get('/api/'+tableName+'/decrease/{name}', listManager.decrease);
+		$.get('/api/'+tableName+'/increase/:name', listManager.increase);
+		$.get('/api/'+tableName+'/decrease/:name', listManager.decrease);
 		tableService=$('azure').createTableService(config.accountName, config.accountKey);
 		tableService.createTableIfNotExists(tableName, function(){});
 		listManager.colors=config.colors;
