@@ -55,6 +55,16 @@
 				width:128px;
 				height:128px;				
 			}
+			.block-256
+			{
+				width:256px;
+				height:256px;				
+			}
+			.block-512
+			{
+				width:512px;
+				height:512px;				
+			}
 			
 			.block-256, .block-text
 			{
@@ -115,6 +125,16 @@
 		</style>
 	</head>
 	<script type="text/javascript">
+
+		String.prototype.endsWith=function(s)
+		{
+			return this.substring(this.length-s.length)==s;
+		};
+		String.prototype.startsWith=function(s)
+		{
+			return this.substring(0,s.length)==s;
+		};
+
 		window.onhashchange=function(){
 			loadContent(location.hash);
 		};
@@ -194,13 +214,31 @@
 				block.addClass('block-text').text(item.text);
 			if(item.icon)
 				block.addClass('icon-'+item.icon+'-'+size).removeClass('block-noimg');
+			if(item.size)
+				block.removeClass('block-'+size).addClass('block-'+item.size);
 			if(item.background)
 				block.css({'background-image': 'url('+item.background+')', 'background-position':'center center'});
 			
 			if(item.url)
-				block.click(function(){
-				$('h1').text(item.name || item.text);
-				window.location=item.url; });
+			{
+				if(item.url.startsWith('rtsp://'))
+				{
+					$('<object classid="clsid:9BE31822-FDAD-461B-AD51-BE1D1C159921" codebase="http://downloads.videolan.org/pub/videolan/vlc/latest/win32/axvlc.cab" width="'+(item.size || size)+'" height="'+((item.size || size)*3/4)+'" events="True"> \
+        <param name="Src" value="'+item.url+'"></param> \
+        <param name="ShowDisplay" value="True" ></param> \
+        <param name="AutoLoop" value="no"></param> \
+        <param name="AutoPlay" value="yes"></param> \
+        <embed type="application/x-google-vlc-plugin" name="vlc" autoplay="yes" loop="no" width="'+(item.size || size)+'" height="'+((item.size || size)*3/4)+'" target="'+item.url+'"></embed> \
+    </object> ').appendTo(block);
+				}
+				else
+				{
+					block.click(function(){
+						$('h1').text(item.name || item.text);
+						window.location=item.url;
+					});
+				}
+			}
 			else if(typeof(item.cmd)!='undefined')
 			{
 				if(typeof(item.cmd.ajax)!='undefined')

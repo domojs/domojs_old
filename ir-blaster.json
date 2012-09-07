@@ -31,7 +31,7 @@
 	},
 	{
 		"text":"PC",
-		"url":"#ir-blaster/pc"
+		"cmd":"/api/http-blaster/wol"
 	},
 	{
 		"text":"Bluray",
