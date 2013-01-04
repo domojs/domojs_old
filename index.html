@@ -213,11 +213,13 @@
 			if(item.text)
 				block.addClass('block-text').text(item.text);
 			if(item.icon)
+			{
 				block.addClass('icon-'+item.icon+'-'+size).removeClass('block-noimg');
+			}
 			if(item.size)
 				block.removeClass('block-'+size).addClass('block-'+item.size);
 			if(item.background)
-				block.css({'background-image': 'url('+item.background+')', 'background-position':'center center'});
+				block.css({'background-image': 'url('+item.background+')', 'background-position':'center center', 'background-repeat':'no-repeat'});
 			
 			if(item.url)
 			{
@@ -243,7 +245,7 @@
 			{
 				if(typeof(item.cmd.ajax)!='undefined')
 				{
-					block.click(function(){ queryData.apply(this, item); });
+					block.click(function(){ queryData.call(this, item); });
 				}
 				else if($.isPlainObject(item.cmd))
 				{						
@@ -295,8 +297,9 @@
 			{
 				if(key=='ajax')
 					continue;
-				dialog.append('<span class="label">'+cmd[key].displayText+'</span>');
-				dialog.append('<input id="'+key+'" type="text" name="'+key+'">');
+				if(cmd[key].mode!='hidden')
+					dialog.append('<span class="label">'+cmd[key].displayText+'</span>');
+				dialog.append('<input id="'+key+'" type="'+(cmd[key].mode || 'text')+ '" name="'+key+'" value="'+ (cmd[key].defaultValue || '')+'">');
 			}
 			dialog.dialog({buttons:{OK:function(){ 
 				for(var key in cmd)
