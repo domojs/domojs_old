@@ -1,28 +1,17 @@
 <section>
 <header>
 <title>Scenarii</title>
-<link rel="stylesheet" href="../scenarii/css/codemirror.css">
-<script type="text/javascript" src="../scenarii/js/codemirror.js"></script>
-<script type="text/javascript" src="../scenarii/js/javascript.js"></script>
+<script type="text/javascript" src="js/jstree.js"></script>
+<link rel="stylesheet" href="css/jstree.css" />
 <style type="text/css">
-	#toolbar, #content-editor
+	#content-editor, #editor
 	{
-		border:1px solid black;
+		width:auto;
 	}
 	
-	#toolbar, #content-editor, .CodeMirror
+	#editor
 	{
-		background-color:white;
-		width:1024px;
-	}
-	
-	body, a
-	{
-		margin:0;
-		font-family:Segoe UI, Arial;
-		background-color:#1B534E;
-		color:white;
-		text-decoration:none;
+		height:700px;
 	}
 	
 	#content-editor
@@ -35,7 +24,23 @@
 		background-color:#eee;
 		height:40px;
 		border-bottom-width:0;
+		border-top-width:0;
 	}
+    
+    #fileExplorer
+    {
+        width:250px;
+		float:left;
+		background:white;
+		overflow-y:auto;
+		max-height: 740px
+    }
+	
+	#fileExplorer .label
+	{
+		color:black
+	}
+	
 	
 	#toolbar a
 	{
@@ -43,7 +48,7 @@
 		float:left;
 		margin:3px;
 		vertical-align:bottom;
-		background-image: url("../domojs/img/domojs-32.png");
+		background-image: url("/img/domojs-32.png");
 		background-repeat: no-repeat;   
 		border:1px solid transparent;
 		display:block
@@ -56,17 +61,68 @@
 </style>
 </header>
 <article>
-	<div id="toolbar">
-		<a class="block icon-upload-32" href="#">
-		</a>
-		<a class="block icon-cancel-32" href="#">
-		</a>
+	<div id="fileExplorer">
 	</div>
-	<div id="content-editor">
-		<textarea id="editor">$('domo').on('2012-08-04 11:00', function() { alert('pwic'); });</textarea>
-	</div>
+    <div id="content-editor">
+    	<div id="toolbar">
+    		<a class="block icon-upload-32" id="upload" href="#">
+    		</a>
+    		<a class="block icon-cancel-32" id="reload" href="#">
+    		</a>
+    	</div>
+    	<div id="editor">
+    	</div>
+    </div>
 	<script type="text/javascript">
-		CodeMirror.fromTextArea($('#editor')[0], {lineNumbers:true, matchBrackets:true});
+		var currentFile='';
+		var editor=ace.edit('editor');
+		editor.setTheme('ace/theme/github');
+		
+		
+		editor.commands.addCommand({
+			name: 'upload',
+			bindKey: {win: 'Ctrl-S',  mac: 'Command-S'},
+			exec: function(editor) {
+				$.ajax({type:'POST', url:currentFile, data:editor.getSession().getValue(), success:function(data){ 
+					if(!data.error) 
+						alert('file save successfully'); 
+					else
+						alert('file NOT saved\n'+data.error);
+				}});
+			},
+			readOnly: false // false if this command should not apply in readOnly mode
+		});
+		
+		$('#fileExplorer').tree({source:'/api/explorer', label:function(node){ return node.name; }, key:function(node){ return node.url; }, children:function(node){ return !(/\.[A-Z]+$/i.test(node.url)) && node.url; },  focusedNodeChanged:function(ev, treeNode){
+			var file=$(treeNode).data('node').url;
+            if(/\.[A-Z]+$/i.test(file))
+			{
+				switch(file.match(/\.[A-Z]+$/i)[0])
+				{
+					case '.html':
+					case '.htm':
+						editor.getSession().setMode('ace/mode/html');
+						break;
+                    case '.xml':
+                        editor.getSession().setMode('ace/mode/xml');
+                        break;
+					case '.js':
+					case '.jnode':
+					case '.onsm':
+					default:
+						editor.getSession().setMode('ace/mode/javascript');
+						break;
+				}
+				$.ajax({url:file, success:function(data){ 
+					currentFile=file;
+					editor.setValue(data); 
+				}, dataType:'text', cache:false})
+			}
+            else
+            {
+                $('#fileExplorer').data('treeOptions')._toggleTreeNode.call(treeNode);
+            }
+		}});
 	</script>
 </article>
 </section>

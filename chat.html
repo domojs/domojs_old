@@ -1,0 +1,27 @@
+<section>
+<header>
+	<title>Crokmou</title>
+	<script type="text/javascript">
+		$(document).on('keypress', '#txtInput',function(ev){ 
+			if(ev.keyCode==13)
+			{
+				socket.emit('chat', $(this).val());
+				$('#designer ul li.input').before($('<li></li>').text(data));
+			}
+		});
+		
+		socket.on('chat', function(data){
+			$('#designer ul li.input').before($('<li></li>').text(data));
+		});
+	</script>
+</header>
+<article>
+	<div id="designer">
+		<ul>
+			<li class="input">
+				<input type="text" id="txtInput" />
+			</li>
+		</ul>
+	</div>
+</article>
+</section>

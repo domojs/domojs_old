@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>VLC</title>
+        <script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
+        <script type="text/javascript" src="/js/jquery-ui-1.8.22.min.js"></script>
+        <script type="text/javascript" src="/js/JQuery.ACT.js"></script>
+        <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    	<link type="text/css" href="css/jquery-ui-1.8.22.custom.css" rel="stylesheet" />        
+    	<link type="text/css" href="css/domojs-32.css" rel="stylesheet" />        
+        <style type="text/css">
+            html, body
+            {
+                margin:0;
+                height:100%;
+                width:100%;
+				overflow:hidden;
+            }
+        
+			.icon-32
+			{
+				background-image:url('img/domojs-32.png');
+				display:block;
+			}
+			
+			#controls .left
+			{
+				float:left;
+			}
+			
+			#controls .right
+			{
+				float:right;
+			}
+
+            .player
+            {
+                position:absolute;
+                height:100%;
+                width:100%;
+                top:0px;
+                left:0px;
+                right:0px;
+                bottom:0px;
+            }
+            
+            #overlay
+            {
+				background:rgba(255,255,255,0.01);
+                -ms-filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#3FFFFFF,endColorstr=#3FFFFFF);
+                filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#3FFFFFF,endColorstr=#3FFFFFF);
+				overflow:hidden;
+            }
+            
+            #controls
+            {
+				display:none;
+                margin:0 auto;
+                opacity:0.75;
+                width:75%;
+                color:white;
+				padding-top:30px;
+            }
+			
+			#controls .left,
+			#controls .right
+			{
+				margin-top:-15px;
+				line-height:32px;
+			}			
+            
+            #progress
+            {
+                /*width:100%;*/
+                height:5px;
+                background:rgba(255,255,255,0.1);
+                border:none;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="player" class="player">
+<!-- 			<object id="vlc" name="vlc" class="player"
+				classid="clsid:9BE31822-FDAD-461B-AD51-BE1D1C159921" 
+				codebase="http://download.videolan.org/pub/videolan/vlc/last/win32/axvlc.cab"
+				events="True">
+ -->					<param name="WindowLess" value="true"></param>
+					<param name="windowLess" value="true"></param>
+					<param name="WindowLess" value="true"></param>
+					<param name="windowless" value="true"></param>
+                    <param name="AutoLoop" value="false"></param>
+                    <param name="AutoPlay" value="false"></param>
+                    <param name="Toolbar" value="false"></param>
+					<param name="Visible" value="true"></param>
+					<embed 
+						type="application/x-vlc-plugin" 
+						id="vlcplayer" 
+						autoplay="no" 
+						autoloop="no"
+						controls="no"
+						windowless="yes"
+						height="100%"
+						width="100%"
+						loop="no"/>
+				<!-- </object> -->
+        </div>
+    <div id="overlay" class="player">
+        <div id="controls">
+			<a class="left icon-32 icon-play-32" title="play" href="javascript:commands.play()"></a>
+			<a class="left icon-32 icon-pause-32" title="pause" href="javascript:commands.pause()"></a>
+			<!-- <a class="icon-32 icon-stop-32" title="Stop" href="javascript:commands.stop()"></a> -->
+			<span class="right" id="timeLeft"></span>
+			<a class="right icon-32 icon-Volume-mute-32" title="Mute" href="javascript:commands.mute()"></a>
+			<div id="progress"></div>
+        </div>        
+		<div id="console" style="width:100%; margin-top:100%; height:50px; background:red">
+		</div>
+    </div>
+    <script type="text/javascript" language="javascript">
+        if(typeof(vlc)=='undefined' || typeof(vlc.playlist)=='undefined')
+    	    vlc = document.getElementById("vlcplayer");
+    	if(typeof(vlc.playlist)=='undefined')
+            vlc=vlc.parentNode;
+        vlc.on=function(event, handler, bubble)
+        {
+            bubble=bubble || false;
+            if(vlc.attachEvent)
+                vlc.attachEvent(event, handler);
+            else
+                vlc.addEventListener(event, handler, bubble);
+   
+        }
+        
+        
+        $('#progress').progressbar({value:0});
+        $('#progress .ui-progressbar-value').show();
+        
+        $(document)
+            .bindKey('Space', function(){ commands.pause(); displayControls(); })
+            .bindKey('left', function(){ commands.rseek(-10000);  displayControls();})
+            .bindKey('Ctrl+Left', function(){ commands.rseek(-60000);  displayControls();})
+            .bindKey('right', function(){ commands.rseek(10000);  displayControls();})
+            .bindKey('Ctrl+Right', function(){ commands.rseek(+60000);  displayControls();})
+			.bindKey('²', function(){ $('#console').slideUp(); });
+            
+        
+        
+        vlc.on('MediaPlayerTimeChanged', function(){
+            $('#progress .ui-progressbar-value').css('width', vlc.input.position*100+'%');
+            $('#progress').progressbar("option", {max:vlc.input.length});
+            var left=new Date(vlc.input.length-vlc.input.time);
+            $('#timeLeft').text('-'+left.getMinutes()+':'+left.getSeconds());
+			socket.emit('player.status', status());
+        });
+        
+        var hide=setTimeout(function(){ $('#controls').fadeOut(); }, 2000);
+        
+        function displayControls(){
+            clearTimeout(hide);
+			$('#controls').fadeIn();
+            hide=setTimeout(function(){ if(vlc.input.state==3) $('#controls').fadeOut(); }, 2000);
+        }
+        
+		function togglePlayPauseButtons()
+		{
+			$('a[title="play"]').toggle(vlc.input.state==4);
+			$('a[title="pause"]').toggle(vlc.input.state==3);
+			socket.emit('player.status', status());
+		}
+		
+        $('#overlay').on('mousemove', displayControls);
+        vlc.on('MediaPlayerForward', displayControls);
+        vlc.on('MediaPlayerBackward', displayControls);
+        vlc.on('MediaPlayerPlaying', togglePlayPauseButtons);
+        vlc.on('MediaPlayerPaused', togglePlayPauseButtons);
+		
+		
+		
+        socket = io.connect('http://home.dragon-angel.fr/player');
+        
+		
+		
+        function status()
+        { 
+            return { 
+                input:
+                    {
+                        length:vlc.input.length,
+                        position:vlc.input.position,
+                        time:vlc.input.time,
+                        state:vlc.input.state
+                    },
+				audio:
+					{
+						count:vlc.audio.count,
+						mute:vlc.audio.mute,
+						volume:vlc.audio.volume,
+						track:vlc.audio.track,
+						channel:vlc.audio.channel
+					},
+                mediaDescription:
+                    {
+                        title:vlc.mediaDescription.title, 
+                        artist:vlc.mediaDescription.artist,
+                        album:vlc.mediaDescription.album,
+                        copyright:vlc.mediaDescription.copyright,
+                        trackNumber:vlc.mediaDescription.trackNumber,
+                        description:vlc.mediaDescription.description,
+                        rating:vlc.mediaDescription.rating,
+                        date:vlc.mediaDescription.date,
+                        setting:vlc.mediaDescription.setting,
+                        URL:vlc.mediaDescription.URL,
+                        language:vlc.mediaDescription.language ,
+                        nowPlaying:vlc.mediaDescription.nowPlaying,
+                        publisher:vlc.mediaDescription.publisher, 
+                        encodedBy:vlc.mediaDescription.encodedBy, 
+                        artworkUrl:vlc.mediaDescription.artworkURL,
+                        trackID:vlc.mediaDescription.trackID                
+                    }
+                } 
+        }
+        
+        socket.on('player.status', status);
+        
+        socket.on('message', function(text){
+           vlc.video.marquee.text= text;
+           vlc.video.marquee.color="WHITE";
+           vlc.video.marquee.enable();
+        });
+        
+        socket.on('player', function(cmd){
+            if(typeof(cmd)=='string') 
+                commands[cmd].apply(commands, Array.prototype.slice.call(arguments, 1,arguments.length));
+			else
+				commands[cmd.name].apply(commands,cmd.args);
+			
+			return status();
+        });
+        
+    	var commands={
+        	mute:function (){
+          	    vlc.audio.toggleMute();
+            },
+        	play:function(vid){
+                if(typeof(vid)!='undefined')
+                {
+                    var id=vlc.playlist.add(vid);
+                    vlc.playlist.playItem(id);
+                }
+                else
+          	        vlc.playlist.play();
+				$(vlc).height('100%').width('100%');
+				displayControls();
+				$('a[title="Play"]').toggle(vlc.input.state==4);
+				$('a[title="Pause"]').toggle(vlc.input.state==3);
+            },
+        	stop:function(){
+          	    vlc.playlist.stop();
+				displayControls();
+            },
+        	pause:function(){ 
+          	    vlc.playlist.togglePause();
+				displayControls();
+            },
+			rseek:function(time){
+				this.seek(vlc.input.time+time);
+			},
+			seek:function(time){
+				vlc.input.time=time;
+				displayControls();
+			},
+			rvolume:function(volume){
+				this.volume(vlc.audio.volume+volume);
+			},
+			volume:function(volume){
+				vlc.audio.volume=volume;
+			},
+			artwork:function(){
+				reader=new FileReader();
+				reader.onloadend=function(evt){
+					socket.emit('player.artwork', evt.target.result);
+				}
+				var url=reader.readAsDataURL(vlc.mediaDescription.artworkURL.substring('file:///'.length).replace(/\//g, '\\'));
+			}
+    	};
+
+		function getBase64Image(img)
+		{
+			canvas = document.createElement("canvas")
+			canvas.width = img.width
+			canvas.height = img.height
+			context = canvas.getContext("2d")
+			// draw image into canvas
+			context.drawImage(img, 0, 0)
+
+			/*
+			Get the data-URL formatted image
+			using jpeg format as the type of the image to be returned
+			@see: http://www.w3.org/TR/html5/the-canvas-element.html*/
+			return canvas.toDataURL("image/jpeg")
+
+			return data;
+		}
+
+		
+        <!-- commands.play("file:///E:\\Torrents\\[Zz]_Shion_no_Ou_01.mp4"); -->
+        <!-- commands.play("file:///C:\\Users\\npenin\\Downloads\\White_Collar_S1.02_-_Attrape_moi_si_tu_peux_-_partie_2.avi"); -->
+    </script>
+    </body>
+</html>
