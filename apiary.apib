@@ -2,46 +2,98 @@ FORMAT: 1A
 HOST: http://www.google.com
 
 # domojs
-Notes API is a *short texts saving* service similar to its physical paper presence on your table.
+Domojs helps you manage your home. 
 
-# Group Notes
-Notes related resources of the **Notes API**
 
-## Notes Collection [/notes]
-### List all Notes [GET]
+## Device Categories [/api/devices]
+### List all device categories [GET]
 + Response 200 (application/json)
 
-        [{
-          "id": 1, "title": "Jogging in park"
-        }, {
-          "id": 2, "title": "Pick-up posters from post-office"
-        }]
+        [
+            {
+                "name":"gpio",
+                "length":1,
+                "url":"/api/devices/gpio"
+            },
+            {
+                "name":"remote",
+                "length":10,
+                "url":"/api/devices/remote"
+            },
+            {
+                "name":"switch",
+                "length":2,
+                "url":"/api/devices/switch"
+            },
+            {
+                "name":"analogic",
+                "length":1,
+                "url":"/api/devices/analogic"
+            },
+            {
+                "name":"values",
+                "length":1,
+                "url":"/api/devices/values"
+            },
+            {
+                "name":"pvr",
+                "length":1,
+                "url":"/api/devices/pvr"
+            }
+        ]
 
-### Create a Note [POST]
-+ Request (application/json)
-
-        { "title": "Buy cheese and bread for breakfast." }
-
-+ Response 201 (application/json)
-
-        { "id": 3, "title": "Buy cheese and bread for breakfast." }
-
-## Note [/notes/{id}]
-A single Note object with all its details
+## Device category [/api/devices/{category}]
+A single category with all the devices related to it
 
 + Parameters
-    + id (required, number, `1`) ... Numeric `id` of the Note to perform action with. Has example value.
+    + category (required, string, `switch`) ... Device `category` to get devices with. Has example value.
 
-### Retrieve a Note [GET]
+### Retrieve a devices collection [GET]
 + Response 200 (application/json)
 
-    + Header
+        [
+            {
+                "name":"pioneer.power",
+                "length":2,
+                "url":"/api/devices/switch/pioneer.power"
+            },
+            {
+                "name":"pioneer.mute",
+                "length":2,
+                "url":"/api/devices/switch/pioneer.mute"
+            }
+        ]
+        
+        
+## Device commands [/api/devices/{category}/{name}]
+A single device with all its commands
 
-            X-My-Header: The Value
++ Parameters
+    + category (required, string, `switch`) ... Device `category` to get devices with. Has example value.
+    + name (required, string, `pioneer.power`) ... Device `name` to get commands on. Has example value.
 
-    + Body
+### Retrieve a commands collection [GET]
++ Response 200 (application/json)
 
-            { "id": 2, "title": "Pick-up posters from post-office" }
+        [
+            {
+                "name":"on",
+                "url":"/api/pioneer/PO"
+            },
+            {
+                "name":"off",
+                "url":"/api/pioneer/PF"
+            }
+        ]
 
-### Remove a Note [DELETE]
-+ Response 204
+
+## Execute command [/api/devices/{category}/{name}/{cmd}]
+A single device with all its commands
+
++ Parameters
+    + category (required, string, `switch`) ... Device `category` to get devices with. Has example value.
+    + name (required, string, `pioneer.power`) ... Device `name` to get commands on. Has example value.
+    + cmd (required, string, `on`) ... `cmd` to execute on specified device named `name`. Has example value.
+
+### Retrieve a commands collection [GET]
++ Response 200 (text/plain)
