@@ -10,6 +10,15 @@
 [submodule "domojs-gpio"]
 	path = modules/gpio
 	url = https://github.com/npenin/domojs-gpio.git
-[submodule "domojs-wol"]
-	path = modules/wol
-	url = https://github.com/npenin/domojs-wol.git
+[submodule "domojs-hdhomerun"]
+	path = modules/hdhomerun
+	url = https://github.com/npenin/domojs-hdhomerun.git
+[submodule "domojs-pioneer"]
+	path = modules/pioneer
+	url = https://github.com/npenin/domojs-pioneer.git
+[submodule "domojs-gpio"]
+	path = modules/gpio
+	url = https://github.com/npenin/domojs-gpio.git
+[submodule "domojs-pages"]
+	path = modules/pages
+	url = https://github.com/npenin/domojs-pages.git
