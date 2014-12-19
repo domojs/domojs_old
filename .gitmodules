@@ -16,9 +16,15 @@
 [submodule "domojs-pioneer"]
 	path = modules/pioneer
 	url = https://github.com/npenin/domojs-pioneer.git
-[submodule "domojs-gpio"]
-	path = modules/gpio
-	url = https://github.com/npenin/domojs-gpio.git
+[submodule "domojs-media"]
+	path = modules/media
+	url = https://github.com/npenin/domojs-mediacenter.git
 [submodule "domojs-pages"]
 	path = modules/pages
 	url = https://github.com/npenin/domojs-pages.git
+[submodule "domojs-sqblaster"]
+	path = modules/sqblaster
+	url = https://github.com/npenin/domojs-sqblaster.git
+[submodule "domojs-weather"]
+	path = modules/weather
+	url = https://github.com/npenin/domojs-weather.git
