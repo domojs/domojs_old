@@ -23,7 +23,7 @@
 	path = modules/pages
 	url = https://github.com/npenin/domojs-pages.git
 [submodule "domojs-sqblaster"]
-	path = modules/sqblaster
+	path = modules/sq-blaster
 	url = https://github.com/npenin/domojs-sqblaster.git
 [submodule "domojs-weather"]
 	path = modules/weather
