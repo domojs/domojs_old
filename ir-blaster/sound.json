@@ -1,8 +1,0 @@
-[
-	{"icon":"Volume-down", "cmd":"/api/ir-blaster/dev1954354876/VOLUME DOWN"},
-	{"icon":"Volume-up", "cmd":"/api/ir-blaster/dev1954354876/VOLUME UP"},
-	{"icon":"Volume-mute", "cmd":"/api/ir-blaster/dev1954354876/MUTE TOGGLE"},
-	{"text":"Optical", "cmd":"/api/ir-blaster/dev1954354876/Optical switch"},
-	{"text":"Dolby Digital", "cmd":"/api/ir-blaster/dev1954354876/Dolby Digital ex"},
-	{"text":"Neo:6", "cmd":"/api/ir-blaster/dev1954354876/Neo:6"}
-]

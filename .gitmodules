@@ -1,0 +1,15 @@
+[submodule "domojs-wol"]
+	path = modules/wol
+	url = https://github.com/npenin/domojs-wol.git
+[submodule "domojs-freebox"]
+	path = modules/freebox
+	url = https://github.com/npenin/domojs-freebox.git
+[submodule "domojs-downloadmanager"]
+	path = modules/download-manager
+	url = https://github.com/npenin/domojs-downloadmanager.git
+[submodule "domojs-gpio"]
+	path = modules/gpio
+	url = https://github.com/npenin/domojs-gpio.git
+[submodule "domojs-wol"]
+	path = modules/wol
+	url = https://github.com/npenin/domojs-wol.git

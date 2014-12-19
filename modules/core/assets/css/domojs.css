@@ -1,0 +1,267 @@
+
+html, body, article
+{
+    width:100%;
+    height:100%;
+}
+
+body, input
+{
+	margin:0;
+    font-family:'Segoe UI Light', 'Tahoma', 'Verdana';
+	background-color:#e8e8e8;
+	/*color:white;*/
+	text-decoration:none;
+}
+
+.ui-dialog,
+.ui-autocomplete
+{
+    z-index:1;
+}
+
+.ui-autocomplete li small
+{
+    color: grey;
+    font-size:smaller;
+}
+
+.ui-autocomplete li .ui-state-focus small
+{
+    color: lightgrey;
+}
+
+input
+{
+    background-color:transparent;
+    border:solid 1px black;
+    padding:5px;
+}
+
+#content
+{
+    height:calc(100%);
+    padding-top:50px;
+}
+
+.alert .ui-dialog-titlebar
+{
+	display:none;
+}
+
+.block
+{
+	float:left;
+	/*background-color:#1BA1E2;*/
+    color:white;
+	box-sizing:border-box;
+}
+
+.block.col-md-6
+{
+    padding:0;
+    width:50% !important;
+}
+
+.icon-32
+{
+	background-image: url("/assets/core/img/domojs-32.png");
+}
+.icon-48
+{
+    background-image: url("/assets/core/img/domojs-48.png");
+}
+.icon-64
+{
+    background-image: url("/assets/core/img/domojs-64.png");
+}
+.icon-128
+{
+	background-image: url("/assets/core/img/domojs-128.png");
+}
+.icon-256
+{
+	background-image: url("/assets/core/img/domojs-256.png");
+}
+
+.icon-32 .glyphicon
+{
+    font-size:16pt;
+    line-height:32px;
+    width:32px;
+    text-align:center;
+}
+.icon-48 .glyphicon
+{
+    font-size:32pt;
+    line-height:48px;
+    width:48px;
+    text-align:center;
+}
+.icon-64 .glyphicon
+{
+    font-size:48pt;
+    line-height:64px;
+    width:64px;
+    text-align:center;
+}
+.icon-128 .glyphicon
+{
+    font-size:64pt;
+    line-height:128px;
+    width:128px;
+    text-align:center;
+}
+.icon-256 .glyphicon
+{
+    font-size:128pt;
+    line-height:256px;
+    width:256px;
+    text-align:center;
+}
+
+.block-noimg
+{
+	background-image:none;
+	text-overflow:ellipsis;
+	overflow:hidden;
+}
+
+.block.block-32,
+.block-32 .faces,
+.block-32 .faces > div
+{
+	width:32px;
+	height:32px;
+}
+.block.block-48,
+.block-48 .faces,
+.block-48 .faces > div
+{
+	width:48px;
+	height:48px;
+}
+.block.block-64,
+.block-64 .faces,
+.block-64 .faces > div
+{
+	width:64px;
+	height:64px;
+}
+.block.block-128,
+.block-128 .faces,
+.block-128 .faces > div
+{
+	width:128px;
+	height:128px;
+}
+.block.block-256,
+.block-256 .faces,
+.block-256 .faces > div
+{
+	width:256px;
+	height:256px;
+}
+.block.block-512,
+.block-512 .faces,
+.block-512 .faces > div
+{
+	width:512px;
+	height:512px;
+}
+
+.outblock
+{
+	float:left;
+	margin:3px;
+	border:3px solid transparent;
+	background-repeat: no-repeat;
+}
+
+
+.block-text
+{
+	vertical-align:bottom;
+	padding-bottom:0;
+	font-size:20pt;
+	text-overflow:ellipsis;
+	overflow:hidden;
+    position:relative;
+}
+
+.block-text div
+{
+    position:absolute;
+    bottom:0px;
+}
+
+.block-bigtext
+{
+	vertical-align:top;
+	padding:64px 20px;
+	width:216px;
+	height:128px;
+	font-size:128px;
+	text-align:right;
+}
+
+#toolbar .block
+{
+	width:32px;
+	height:32px;
+	padding:0;
+}
+
+.block:hover
+{
+	border-color:#ccc;
+}
+
+.previous
+{
+	margin:0px;
+	background-image:url('/assets/img/previous.png');
+    background-color:transparent;
+    background-repeat:no-repeat;
+    background-position:center center;
+	width:70px;
+	height:55px;
+    display:inline-block;
+}
+
+#navbar .edit
+{
+    margin-right:10px;
+    float:right;
+}
+
+
+#navbar .update
+{
+    float:right;
+    margin-right:10px;
+}
+
+.block-black { background-color:#222222; }
+.block-blue { background-color:#1BA1E2; }
+.block-brown { background-color:#A05000; }
+.block-green { background-color:#339933; }
+.block-lime { background-color:#A2C139; }
+.block-magenta { background-color:#D80073; }
+.block-orange { background-color:#F09609; }
+.block-pink { background-color:#E671B8; }
+.block-purple { background-color:#A200FF; }
+.block-red { background-color:#E51400; }
+.block-viridian { background-color:#00ABA9; }
+
+.block-text-black { color:#222222; }
+.block-text-blue { color:#1BA1E2; }
+.block-text-brown { color:#A05000; }
+.block-text-green { color:#339933; }
+.block-text-lime { color:#A2C139; }
+.block-text-magenta { color:#D80073; }
+.block-text-orange { color:#F09609; }
+.block-text-pink { color:#E671B8; }
+.block-text-purple { color:#A200FF; }
+.block-text-red { color:#E51400; }
+.block-text-viridian { color:#00ABA9; }

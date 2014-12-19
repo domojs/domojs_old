@@ -1,0 +1,83 @@
+/* rotate tile in 3D*/
+
+.outblock.rotate3d
+{
+	border-width:0px;
+}
+
+.rotate3d {
+  -webkit-perspective: 800px;
+  -ms-perspective: 800px;
+  -o-perspective: 800px;
+  perspective: 800px;
+  overflow: visible
+}
+
+.faces {
+  -webkit-transform-style: preserve-3d;
+  -webkit-transition: -webkit-transform 1s;
+  -ms-transform-style: preserve-3d;
+  -o-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -o-transition: -o-transform 1s;
+  transition: -webkit-transform 1s;
+  transition: -ms-transform 1s;
+  transition: -o-transform 1s;
+  transition: transform 1s
+}
+
+.faces > div {
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  -ms-backface-visibility: hidden;
+  -o-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.faces .front
+{
+	position:relative;
+	top:-100%;
+}
+
+.rotate3dY .back {
+  -webkit-transform: rotateY( 180deg );
+  -ms-transform: rotateY( 180deg );
+  -o-transform: rotateY( 180deg );
+  transform: rotateY( 180deg )
+}
+
+.rotate3dY .front {
+  -webkit-transform: rotateY( 360deg );
+  -ms-transform: rotateY( 360deg );
+  -o-transform: rotateY( 360deg );
+  transform: rotateY( 360deg )
+}
+
+.rotate3dX .back {
+  -webkit-transform: rotateX( 180deg );
+  -ms-transform: rotateX( 180deg );
+  -o-transform: rotateX( 180deg );
+  transform: rotateX( 180deg )
+}
+
+.rotate3dY:hover .faces,
+.rotate3dY.now .faces
+ {
+  -webkit-transform: rotateY( 180deg );
+  -ms-transform: rotateY( 180deg );
+  -o-transform: rotateY( 180deg );
+  transform: rotateY( 180deg )
+}
+
+
+
+.rotate3dX:hover .faces:hover ,
+.rotate3dY.now .faces
+{
+  -webkit-transform: rotateX( 180deg );
+  -ms-transform: rotateX( 180deg );
+  -o-transform: rotateX( 180deg );
+  transform: rotateX( 180deg )
+}
