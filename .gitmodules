@@ -40,3 +40,6 @@
 [submodule "mdns"]
 	path = node_modules/mdns
 	url = https://github.com/agnat/node_mdns
+[submodule "mvc"]
+	path = node_modules/mvc
+	url = https://github.com/npenin/mvc
