@@ -37,3 +37,6 @@
 [submodule "jnode"]
 	path = node_modules/jnode
 	url = https://github.com/npenin/jnode
+[submodule "mdns"]
+	path = node_modules/mdns
+	url = https://github.com/agnat/node_mdns
