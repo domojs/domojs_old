@@ -34,3 +34,6 @@
 [submodule "id3"]
 	path = node_modules/id3
 	url = https://github.com/npenin/JavaScript-ID3-Reader
+[submodule "jnode"]
+	path = node_modules/jnode
+	url = https://github.com/npenin/jnode
