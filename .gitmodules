@@ -31,3 +31,6 @@
 [submodule "accept"]
 	path = node_modules/accept
 	url = https://github.com/npenin/node-accept.git
+[submodule "id3"]
+	path = node_modules/id3
+	url = https://github.com/npenin/JavaScript-ID3-Reader
