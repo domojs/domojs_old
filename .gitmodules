@@ -28,3 +28,6 @@
 [submodule "domojs-weather"]
 	path = modules/weather
 	url = https://github.com/npenin/domojs-weather.git
+[submodule "accept"]
+	path = node_modules/accept
+	url = https://github.com/npenin/node-accept.git
