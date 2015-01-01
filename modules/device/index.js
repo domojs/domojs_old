@@ -12,7 +12,6 @@ exports.init=function(config){
         return ;
         console.log('loading devices');
         savedDevices=require('./devices.json');
-        console.log(savedDevices);
         $.eachAsync(savedDevices, function(index,item, next){
             require('./controllers/api/home.js').add(item, next);
         }, function(){
@@ -31,7 +30,6 @@ $.device=function register(device, body)
     switch(device.type)
     {
         case 'switch':
-            console.log(device.commands);
             if(typeof(device.commands.toggle)=='undefined' && typeof(device.status)!='undefined')
             {
                 console.log('setting toggle command');
@@ -67,7 +65,6 @@ $.device=function register(device, body)
             }, callback);
         };
     });
-    console.log(device);
     if(device.subdevices)
     {
         $.each(device.subdevices, function(index,item){
