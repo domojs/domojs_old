@@ -43,3 +43,9 @@
 [submodule "mvc"]
 	path = node_modules/mvc
 	url = https://github.com/npenin/node-mvc
+[submodule "users"]
+	path = modules/users
+	url = https://github.com/npenin/domojs-users
+[submodule "ifttt"]
+	path = modules/ifttt
+	url = https://github.com/npenin/domojs-ifttt
