@@ -49,3 +49,6 @@
 [submodule "ifttt"]
 	path = modules/ifttt
 	url = https://github.com/npenin/domojs-ifttt
+[submodule "chat"]
+	path = modules/chat
+	url = https://github.com/npenin/jarvis
