@@ -13,6 +13,6 @@
 		"socket.io-client":"lastest",
 		"socket.io":"lastest",
 		"router":"lastest",
-	 	"redis":"lastest",
+	 	"redis":"lastest"
 	}
 }
