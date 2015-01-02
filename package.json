@@ -13,7 +13,6 @@
 		"mvc":"npenin/node-mvc",
 		"socket.io-client":"latest",
 		"socket.io":"latest",
-		"router":"latest",
-	 	"redis":"latest"
+		"router":"latest"
 	}
 }

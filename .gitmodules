@@ -28,15 +28,6 @@
 [submodule "domojs-weather"]
 	path = modules/weather
 	url = https://github.com/npenin/domojs-weather.git
-[submodule "accept"]
-	path = node_modules/accept
-	url = https://github.com/npenin/node-accept.git
-[submodule "id3"]
-	path = node_modules/id3
-	url = https://github.com/npenin/JavaScript-ID3-Reader
-[submodule "jnode"]
-	path = node_modules/jnode
-	url = https://github.com/npenin/jnode
 [submodule "mdns"]
 	path = node_modules/mdns
 	url = https://github.com/agnat/node_mdns

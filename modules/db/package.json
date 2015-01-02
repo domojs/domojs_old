@@ -1,0 +1,8 @@
+{
+	"name":"domojs-db",
+	"version":"0.1.0",
+	"dependencies":
+	{
+		"redis":"latest"
+	}
+}
