@@ -8,12 +8,12 @@
 	"dependencies":
 	{
 		"debug":"latest",
-		"connect":"lastest",
+		"connect":"latest",
 		"jnode":"npenin/jnode",
 		"mvc":"npenin/node-mvc",
-		"socket.io-client":"lastest",
-		"socket.io":"lastest",
-		"router":"lastest",
-	 	"redis":"lastest"
+		"socket.io-client":"latest",
+		"socket.io":"latest",
+		"router":"latest",
+	 	"redis":"latest"
 	}
 }
