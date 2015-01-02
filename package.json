@@ -9,7 +9,8 @@
 	{
 		"debug":"latest",
 		"connect":"lastest",
-		"mvc":"npenin/mvc",
+		"jnode":"npenin/jnode",
+		"mvc":"npenin/node-mvc",
 		"socket.io-client":"lastest",
 		"socket.io":"lastest",
 		"router":"lastest",
