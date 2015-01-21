@@ -1,4 +1,0 @@
-[
-    {"name":"Liste des icônes","url":"#config/icons"},
-    {"name":"Restart", "cmd":"/api/quit"}
-]

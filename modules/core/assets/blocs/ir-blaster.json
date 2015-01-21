@@ -1,0 +1,103 @@
+[[{
+	"icon": "power",
+	"cmd": "http://192.168.68.11/api/devices/remote/dev3999667887/POWER TOGGLE"
+},
+{
+	"name": "HDMI 1",
+	"cmd": "http://192.168.68.11/api/devices/remote/dev3999667887/INPUT HDMI 1"
+},
+{
+	"name": "TV"
+},
+{
+	"name": "HDMI 2",
+	"cmd": "http://192.168.68.11/api/devices/remote/dev3999667887/INPUT HDMI 2"
+}],
+{
+	"size": 512,
+	"color": "lime",
+	"subBlocks": [{
+		"icon": "power",
+		"size": 256,
+		"cmd": {
+			"ajax": "http://192.168.68.11/api/devices/remote/pioneer/on",
+			"refresh": "parent"
+		},
+		"color": "http://192.168.68.11/api/devices/remote/pioneer?status=power"
+	},
+	{
+		"name": "Freebox",
+		"size": 128,
+		"cmd": {
+			"ajax": "http://192.168.68.11/api/devices/remote/pioneer/Sat%2FCbl",
+			"refresh": "parent"
+		},
+		"color": "http://192.168.68.11/api/devices/remote/pioneer?status=Sat%2FCbl"
+	},
+	{
+		"name": "Xbox",
+		"size": 128,
+		"cmd": {
+			"ajax": "http://192.168.68.11/api/devices/remote/pioneer/Game",
+			"refresh": "parent"
+		},
+		"color": "http://192.168.68.11/api/devices/remote/pioneer?status=Game"
+	},
+	{
+		"name": "PC",
+		"size": 128,
+		"cmd": {
+			"ajax": "http://192.168.68.11/api/devices/remote/pioneer/Dvr%2FBdr",
+			"refresh": "parent"
+		},
+		"color": "http://192.168.68.11/api/devices/remote/pioneer?status=Dvr%2FBdr"
+	},
+	{
+		"name": "Ampli",
+		"size": 128
+	},
+	{
+		"icon": "Volume-Mute",
+		"size": 128,
+		"cmd": {
+			"ajax": "http://192.168.68.11/api/devices/remote/pioneer/Mute"
+		}
+	}]
+},
+[{
+	"icon": "power",
+	"cmd": {
+		"ajax": "http://192.168.68.11/api/devices/remote/freebox/power"
+	}
+},
+{
+	"icon": "up",
+	"cmd": {
+		"ajax": "http://192.168.68.11/api/devices/remote/freebox/vol_inc"
+	}
+},
+{
+	"name": "Freebox"
+},
+{
+	"icon": "down",
+	"cmd": {
+		"ajax": "http://192.168.68.11/api/devices/remote/freebox/vol_dec"
+	}
+}],
+{
+	"text": "Chaines",
+	"url": "#ir-blaster/channels"
+},
+{
+	"text": "PC",
+	"cmd": "/api/pc"
+},
+{
+	"text": "Bluray",
+	"url": "#ir-blaster/bluray"
+},
+{
+	"text": "Programme TV",
+	"url": "#epg"
+}]

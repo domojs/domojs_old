@@ -1,0 +1,45 @@
+[submodule "domojs-wol"]
+	path = modules/wol
+	url = https://github.com/npenin/domojs-wol.git
+[submodule "domojs-freebox"]
+	path = modules/freebox
+	url = https://github.com/npenin/domojs-freebox.git
+[submodule "domojs-downloadmanager"]
+	path = modules/download-manager
+	url = https://github.com/npenin/domojs-downloadmanager.git
+[submodule "domojs-gpio"]
+	path = modules/gpio
+	url = https://github.com/npenin/domojs-gpio.git
+[submodule "domojs-hdhomerun"]
+	path = modules/hdhomerun
+	url = https://github.com/npenin/domojs-hdhomerun.git
+[submodule "domojs-pioneer"]
+	path = modules/pioneer
+	url = https://github.com/npenin/domojs-pioneer.git
+[submodule "domojs-media"]
+	path = modules/media
+	url = https://github.com/npenin/domojs-mediacenter.git
+[submodule "domojs-pages"]
+	path = modules/pages
+	url = https://github.com/npenin/domojs-pages.git
+[submodule "domojs-sq-blaster"]
+	path = modules/sq-blaster
+	url = https://github.com/npenin/domojs-sqblaster.git
+[submodule "domojs-weather"]
+	path = modules/weather
+	url = https://github.com/npenin/domojs-weather.git
+[submodule "mdns"]
+	path = node_modules/mdns
+	url = https://github.com/agnat/node_mdns
+[submodule "mvc"]
+	path = node_modules/mvc
+	url = https://github.com/npenin/node-mvc
+[submodule "users"]
+	path = modules/users
+	url = https://github.com/npenin/domojs-users
+[submodule "ifttt"]
+	path = modules/ifttt
+	url = https://github.com/npenin/domojs-ifttt
+[submodule "chat"]
+	path = modules/chat
+	url = https://github.com/npenin/jarvis

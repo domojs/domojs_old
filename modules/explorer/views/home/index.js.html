@@ -1,0 +1,175 @@
+@!(model)
+<link rel="stylesheet" href="/assets/core/css/jquery-ui.css" />
+<link rel="stylesheet" href="/assets/explorer/css/jstree.css" />
+<style type="text/css">
+    #explorer
+    {
+        height:100%;
+    }
+
+    #fileExplorer
+    {
+        overflow-y:auto;
+        overflow-x:hidden;
+        height:calc(100% - 30px);
+    }
+
+    #fileExplorer .node
+    {
+        padding:2px 0;
+        white-space: nowrap;
+        text-overflow:ellipsis;
+	}
+
+    #fileExplorer .label
+    {
+        color:black;
+        font-weight:normal !important;
+    }
+    
+    #fileExplorer .addFolder
+    {
+        color:GoldenRod;
+    }
+    
+    
+    #fileExplorer .node .addFolder,
+    #fileExplorer .node .addFile,
+    #fileExplorer .node .refresh
+    {
+        display:none;
+        margin-top:3px;
+        margin-right:10px;
+    }
+    
+    #fileExplorer .node .ui-state-hover .addFolder,
+    #fileExplorer .node .ui-state-hover .addFile,
+    #fileExplorer .node .ui-state-hover .refresh
+    {
+        display:block;
+        opacity:0.75;
+    }
+    
+
+    #fileExplorer .leaf .addFolder,
+    #fileExplorer .leaf .addFile,
+    #fileExplorer .leaf .refresh
+    {
+        display:none !important;
+    }
+
+    #fileExplorer .glyphicon-folder-close,
+    #fileExplorer .glyphicon-folder-open
+    {
+        color:GoldenRod;
+    }
+
+    #fileExplorer .label .js:before
+    {
+        content:'JS';
+        color:GoldenRod;
+        font-family:'Segoe UI Light';
+        font-weight:bold;
+    }
+    #fileExplorer .label .json:before
+    {
+        content:'JSON';
+        font-family:'Segoe UI Light';
+        color:DarkRed;
+        font-weight:bold;
+    }
+    #fileExplorer .label .html:before
+    {
+        content:'HTML';
+        font-family:'Segoe UI Light';
+        color:DarkGreen;
+        font-weight:bold;
+    }
+    #fileExplorer .label .css:before
+    {
+        content:'CSS';
+        font-family:'Segoe UI Light';
+        font-weight:bold;
+    }
+    #fileExplorer .label .xml:before
+    {
+        content:'XML';
+        font-family:'Segoe UI Light';
+        font-weight:bold;
+    }
+
+    #editor
+    {
+        margin-top:10px;
+        height:calc(100% - 50px);
+    }
+
+    #fileTabs .block
+    {
+        float:right;
+    }
+
+    #fileTabs > li:first-child
+    {
+        margin-left:10px;
+    }
+
+    #fileTabs .icon-edit-32,
+    #fileTabs .glyphicon-pencil
+    {
+        display:none;
+    }
+
+    #fileTabs .unsaved .icon-edit-32,
+    #fileTabs .unsaved .glyphicon-pencil
+    {
+        display:block;
+    }
+
+#fileTabs li.active a,
+#fileTabs li a:hover
+    {
+        margin-bottom:-1px;
+        border-bottom-width:2px;
+        border-bottom-style:solid;
+    }
+
+#fileTabs .js.active a,
+#fileTabs .js a:hover
+    {
+        border-bottom-color:GoldenRod;
+    }
+#fileTabs .json.active a,
+#fileTabs .json a:hover
+    {
+        border-bottom-color:DarkRed;
+    }
+#fileTabs .html.active a,
+#fileTabs .html a:hover
+    {
+        border-bottom-color:DarkGreen;
+    }
+#fileTabs .xml.active a,
+#fileTabs .xml a:hover
+    {
+        border-bottom-color:blue;
+    }
+#fileTabs .css.active a,
+#fileTabs .css a:hover
+    {
+        border-bottom-color:yellow;
+    }
+</style>
+<div id="explorer" class="col-md-3">
+    <div id="toolbar">
+    </div>
+    <div id="fileExplorer">
+    </div>
+</div>
+<div class="col-md-9" style="background-color:white; height:calc(100% - 30px)">
+    <ul id="fileTabs" class="row nav nav-tabs">
+    </ul>
+    <div id="editor" class="row"> </div>
+</div>
+<script src="/assets/explorer/js/jstree.js" />
+<script src="/assets/explorer/js/ace/ace.js" />

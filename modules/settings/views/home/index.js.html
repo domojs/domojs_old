@@ -1,0 +1,71 @@
+@!(settings)
+<div class="container-fluid row" style="background-color:rgba(255,255,255, 0.5); padding-left:15px; padding-right:15px; height:100%;">
+	<h1>Settings</h1>
+	<form id="settingsForm" class="form-horizontal" role="form" action="/settings" method="post">
+	<input type="submit" class="form-control glyphicon glyphicon-save" />
+	@for(var name in settings)
+	{
+		<div class="form-group container">
+		@if(name=='position')
+		{
+			<label class="control-label">@name</label>
+			<div class="input-group">
+				<span class="input-group-addon btn glyphicon glyphicon-globe"></span>
+				<input class="form-control" name="position.latitude" id="latitude" type="text" value="@(settings[name].latitude)" />
+				<input class="form-control" name="position.longitude"id="longitude" type="text" value="@(settings[name].longitude)" />
+			</div>
+		}
+		else if(typeof(settings[name])=='object')
+		{
+			<fieldset title="@name">
+			<h1>@name</h1>
+			@for(var settingName in settings[name])
+			{
+				<label for="@(name).@(settingName)" class="control-label">@settingName</label>
+				<div class="input-group">
+					<input name="@(name).@(settingName)" type="text" value="@(settings[name][settingName])" />
+				</div>
+			}
+			</fieldset>
+		}
+		else if($.isArray(settings[name]))
+		{
+			<label for="@name" class="control-label">@name</label>
+			<div class="input-group">
+			    @for(var i in settings[name])
+			    {
+				    <input name="@name" type="text" value="@(settings[name][i])" />
+				}
+			</div>
+		}
+		else
+		{
+			<label for="@name" class="control-label">@name</label>
+			<div class="input-group">
+				<input name="@name" type="text" value="@(settings[name])" />
+			</div>
+		}
+		</div>
+	}
+	</form>
+	<script type="text/javascript">
+		$('.btn.glyphicon-globe').click(function(){
+			if(navigator.geolocation)
+				navigator.geolocation.getCurrentPosition(function(position){
+					$('#latitude').val(position.coords.latitude);
+					$('#longitude').val(position.coords.longitude);
+				});
+			else
+				alert('your browser does not support geolocation');
+		});
+		$('#settingsForm').on('submit', function(ev){
+			ev.preventDefault();
+			$.ajax({url:$(this).attr('action'), type:$(this).attr('method'), data:$(this).serialize(), success:function(){
+				loadHtml('settings', function(){
+				
+					});
+				}
+			});
+		});
+	</script>
+</div>
