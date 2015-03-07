@@ -43,3 +43,6 @@
 [submodule "chat"]
 	path = modules/chat
 	url = https://github.com/npenin/jarvis
+[submodule "jnode"]
+	path = node_modules/jnode
+	url = https://github.com/npenin/jnode
