@@ -7,9 +7,12 @@ exports.init=function(config){
         $.each(config, function(index,item){
             register($(index).device(item));
         });
-    $('fs').exists('./devices.json', function(exists){
+    $('fs').exists('./modules/device/devices.json', function(exists){
       if(!exists)  
-        return ;
+        {
+            console.log('could not find file devices.json')
+            return ;
+        }
         console.log('loading devices');
         savedDevices=require('./devices.json');
         $.eachAsync(savedDevices, function(index,item, next){
@@ -27,6 +30,10 @@ $.device=function register(device, body)
     if(typeof(devices[device.type])=='undefined')
         Object.defineProperty(devices, device.type, {configurable:false, enumerable:device.type.indexOf('.')!==0, writable:false, value:[]});
     devices[device.type].push(device);
+    device.remove=function(){
+        var indexOfThis=devices[device.type].indexOf(this);
+        devices[device.type].splice(indexOfThis, 1);
+    };
     switch(device.type)
     {
         case 'switch':

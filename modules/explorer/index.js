@@ -1,4 +1,30 @@
 var debug=$('debug')('jnode:browser');
+/*var git = require('nodegit').Repository;
+var StatusFile = require('nodegit').StatusFile;
+var Status = require('nodegit').Status;
+git.prototype.getStatus = function(opts) {
+  var statuses = [];
+  var statusCallback = function(path, status) {
+    statuses.push(new StatusFile({path: path, status: status}));
+  };
+
+  if (!opts) {
+    opts = {
+      flags: Status.OPT.INCLUDE_UNTRACKED |
+             Status.OPT.RECURSE_UNTRACKED_DIRS
+    };
+  }
+  
+  debug('getting status ');
+  debug(Status);
+  return Status.foreachExt(this, opts, statusCallback).then(function() {
+      debug(statuses);
+    return statuses;
+  }, function(err)
+  {
+      debug(err);
+  });
+};*/
 
 exports.init=function(config)
 {
@@ -25,23 +51,64 @@ exports.init=function(config)
                         else
                         {
                             $('fs').readdir(item+(req.params.wildcard || ''), function(error, files){
-                                var result=[];
-                                if(error)
-                                    return next(error);
+                                /*var result=git.openExt(item+(req.params.wildcard || ''), 0, $('path').resolve(item+'/..')).then(function(repo){
+                                    repo.getStatus().then(function(statuses){
+                                        debug('pwic');
+                                        var result=[];
+                                        if(error)
+                                            return next(error);
+        
+                                        var nodes=[],leaves=[];
+                                        $.each(files, function(index,file){
+                                            if(req.params.wildcard)
+                                                node={name:$('path').basename(file), url:baseUrl+'/'+req.params.wildcard+'/'+file};
+                                            else
+                                                node={name:$('path').basename(file), url:baseUrl+'/'+file};
+                                            var status=$.grep(statuses, function(status){
+                                                return file.startsWith(status.path());
+                                            });
+                                            var hasChanged=false;
+                                            if(status.length==1)
+                                                hasChanged=status[0].isModified();
+                                            if($('fs').statSync((req.params.wildcard || '.')+'/'+file).isFile())
+                                                leaves.push($.extend(node, {isLeaf:true, hasChanged:hasChanged}));
+                                            else
+                                                nodes.push($.extend(node, {isLeaf:false}));
+                                        });
+        
+                                        res.send(nodes.concat(leaves));
+                                    },  function(err){
+                                        debug(err);
+                                        var nodes=[],leaves=[];
+                                            $.each(files, function(index,file){
+                                                if(req.params.wildcard)
+                                                    node={name:$('path').basename(file), url:baseUrl+'/'+req.params.wildcard+'/'+file};
+                                                else
+                                                    node={name:$('path').basename(file), url:baseUrl+'/'+file};
+                                                if($('fs').statSync((req.params.wildcard || '.')+'/'+file).isFile())
+                                                    leaves.push($.extend(node, {isLeaf:true, hasChanged:false}));
+                                                else
+                                                    nodes.push($.extend(node, {isLeaf:false}));
+                                            });
+    
+                                            res.send(nodes.concat(leaves));
+                                    });
+                                }, function(err){
+                                    debug(err);*/
+                                    var nodes=[],leaves=[];
+                                        $.each(files, function(index,file){
+                                            if(req.params.wildcard)
+                                                node={name:$('path').basename(file), url:baseUrl+'/'+req.params.wildcard+'/'+file};
+                                            else
+                                                node={name:$('path').basename(file), url:baseUrl+'/'+file};
+                                            if($('fs').statSync((req.params.wildcard || '.')+'/'+file).isFile())
+                                                leaves.push($.extend(node, {isLeaf:true, hasChanged:false}));
+                                            else
+                                                nodes.push($.extend(node, {isLeaf:false}));
+                                        });
 
-                                var nodes=[],leaves=[];
-                                $.each(files, function(index,file){
-                                    if(req.params.wildcard)
-                                        node={name:$('path').basename(file), url:baseUrl+'/'+req.params.wildcard+'/'+file};
-                                    else
-                                        node={name:$('path').basename(file), url:baseUrl+'/'+file};
-                                    if($('fs').statSync((req.params.wildcard || '.')+'/'+file).isFile())
-                                        leaves.push($.extend(node, {isLeaf:true}));
-                                    else
-                                        nodes.push($.extend(node, {isLeaf:false}));
-                                });
-
-                                res.send(nodes.concat(leaves));
+                                        res.send(nodes.concat(leaves));
+                                //});
                             });
                         }
                     }

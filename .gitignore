@@ -17,3 +17,4 @@ $RECYCLE.BIN/
 # Mac desktop service store files
 .DS_Store
 
+modules/device/devices.json

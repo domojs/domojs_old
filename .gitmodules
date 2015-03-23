@@ -28,9 +28,6 @@
 [submodule "domojs-weather"]
 	path = modules/weather
 	url = https://github.com/npenin/domojs-weather.git
-[submodule "mdns"]
-	path = node_modules/mdns
-	url = https://github.com/agnat/node_mdns
 [submodule "mvc"]
 	path = node_modules/mvc
 	url = https://github.com/npenin/node-mvc
@@ -45,4 +42,8 @@
 	url = https://github.com/npenin/jarvis
 [submodule "jnode"]
 	path = node_modules/jnode
-	url = https://github.com/npenin/jnode
+	url = https://github.com/npenin/jnode 
+[submodule "domojs-rfxcom"]
+        path = modules/rfxcom
+        url = https://github.com/npenin/domojs-rfxcom
+
