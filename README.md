@@ -5,4 +5,4 @@ domojs
 
 [![Build Status](https://travis-ci.org/npenin/domojs.svg?branch=v2)](https://travis-ci.org/npenin/domojs)
 
-For more information about domojs and what it does, please ahve a look to the [Wiki](https://github.com/npenin/domojs/wiki)
+For more information about domojs and what it does, please have a look to the [Wiki](https://github.com/npenin/domojs/wiki)
