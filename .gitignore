@@ -18,3 +18,4 @@ $RECYCLE.BIN/
 .DS_Store
 
 modules/device/devices.json
+jnode.config
