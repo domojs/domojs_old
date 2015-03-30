@@ -1,4 +1,9 @@
-node_modules
+node_modules/connect/
+node_modules/debug/
+node_modules/router/
+node_modules/socket.io-client/
+node_modules/socket.io/
+
 
 # =========================
 # Windows detritus
@@ -19,3 +24,5 @@ $RECYCLE.BIN/
 
 modules/device/devices.json
 jnode.config
+channels.json
+settings.json
