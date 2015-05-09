@@ -43,9 +43,6 @@
 [submodule "jnode"]
 	path = node_modules/jnode
 	url = git@github.com:npenin/jnode 
-[submodule "domojs-rfxcom"]
-        path = modules/rfxcom
-        url = git@github.com:npenin/domojs-rfxcom
 [submodule "lifttt"]
 	path = lifttt
 	url = git@github.com:npenin/lifttt
