@@ -47,9 +47,5 @@
 	path = lifttt
 	url = git@github.com:npenin/lifttt
 [submodule "domojs-rfxcom"]
-        path = modules/rfxcom
-        url = git@github.com:npenin/domojs-rfxcom
-
-[submodule "modules/rfxcom"]
 	path = modules/rfxcom
 	url = git@github.com:npenin/domojs-rfxcom.git
