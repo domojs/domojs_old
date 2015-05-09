@@ -2,6 +2,9 @@
 exports.init = function (config, app)
 {
     var io = $('socket.io').listen(global.server);
+    
+    if(global.localServer)
+        var io2=$('socket.io').listen(global.localServer);
 
     // io.configure('production', function ()
     // {
@@ -13,12 +16,26 @@ exports.init = function (config, app)
 
     $.io = exports.io = io;
 	
-    $.on=function(){ io.on.apply(io, arguments); };
+    $.on=function(){
+        io.on.apply(io, arguments); 
+        if(io2) 
+            io2.on.apply(io2, arguments); 
+    };
 
-    $.emit = function(){ io.sockets.emit.apply(io.sockets, arguments); };
+    $.emit = function(){ 
+        io.sockets.emit.apply(io.sockets, arguments); 
+        if(io2) 
+            io2.sockets.emit.apply(io2.sockets, arguments);
+    };
    
+   $.emitTo=function(eventName, to, message)
+   {
+        io.to(to).emit(eventName, message);
+        if(io2)
+            io2.to(to).emit(eventName, message);
+   }
     
-    io.on('connection', function(socket){
+    $.on('connection', function(socket){
         socket.on('join', function(roomName){
             console.log('joining '+roomName);
             socket.join(roomName);

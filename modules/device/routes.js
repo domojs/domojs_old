@@ -1,5 +1,5 @@
 route.on('device', function(url, params, unchanged){
-    $.ajax(loadJsonFromUrl('/device')).done(page.addCommand({name:'add', url:'#device/_new'})); 
+    $.ajax(loadJsonFromUrl('/device')).done(function(){page.addCommand({name:'Nouveau', url:'#device/_new'})}); 
 });
 
 route.on('device/category/{category}', function(url, params)

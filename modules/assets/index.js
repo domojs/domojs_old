@@ -1,27 +1,33 @@
 exports.init=function(config, app)
 {
-	$(function(req,res,next){
-		$('fs').readdir('./modules', function(err, files){
-			res.writeHead(200);
-			$.eachAsync(files, function(index, file, next){
-				$('fs').exists('./modules/'+file+'/routes.js', function(exists){
-					if(!exists)
-						return next();
-
-					$('fs').readFile('./modules/'+file+'/routes.js', {encoding:'utf8'},function(err, data){
-						if(err)
-						{
-							console.log(err);
-							next();
-							return;
-						}
-						res.write(data);
-						next();
-					});
-				});
-			}, function(){ res.end(); });
-		});
-	}).get('/js/routes.js');
+    concatFiles=function(fileName)
+    {
+        $(function(req,res,next){
+    		$('fs').readdir('./modules', function(err, files){
+    			res.writeHead(200, {'content-type':'application/javascript'});
+    			$.eachAsync(files, function(index, file, next){
+    				$('fs').exists('./modules/'+file+'/'+fileName, function(exists){
+    					if(!exists)
+    						return next();
+    
+    					$('fs').readFile('./modules/'+file+'/'+fileName, {encoding:'utf8'},function(err, data){
+    						if(err)
+    						{
+    							console.log(err);
+    							next();
+    							return;
+    						}
+    						res.write(data);
+    						next();
+    					});
+    				});
+    			}, function(){ res.end(); });
+    		});
+    	}).get('/js/'+fileName);
+    }
+    
+	concatFiles('routes.js');
+	concatFiles('module.js');
 
 	$(function(req,res,next){
 		var filePath='./modules/'+req.params.module+'/assets/'+req.params.wildcard;

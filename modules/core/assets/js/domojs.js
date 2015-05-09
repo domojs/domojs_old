@@ -30,7 +30,17 @@ String.prototype.startsWith=function(s)
 		}
 
         window.page={addCommand:function(cmd){
-            $('.navbar-nav').append('<li class="dynamic"><a href="'+cmd.url+'">'+cmd.name+'</a></li>');
+            var $cmd=$('<li class="dynamic"><a href="'+(cmd.url|| '')+'">'+cmd.name+'</a></li>');
+            $('.navbar-nav').append($cmd);
+            if(!cmd.url && cmd.cmd)
+                $('a', $cmd).click(function(ev){
+                    $.getJSON(cmd.cmd, function(){
+                        
+                    });
+                    ev.preventDefault();
+                    ev.stopPropagation();
+                    return false; 
+                });
         }};
         
         function cleanUI(){

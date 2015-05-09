@@ -1,9 +1,14 @@
+*.pid
+epg.xml
+test.js
+*.pfx
 node_modules/connect/
 node_modules/debug/
 node_modules/router/
 node_modules/socket.io-client/
 node_modules/socket.io/
-
+messages.log
+.bin
 
 # =========================
 # Windows detritus
