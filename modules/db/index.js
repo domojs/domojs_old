@@ -24,6 +24,74 @@ exports.init=function(config){
         $.settings('db.host', 'localhost');
     
     $.db=client=redis.createClient(Number($.settings('db.port')), $.settings('db.host'), {});
+    $.db.another=function(){
+        return redis.createClient(Number($.settings('db.port')), $.settings('db.host'), {});
+    }
+    $.db.osort=function(key, columns, sortKey, start, count, callback){
+        
+        if(arguments.length<5)
+        {
+            if($.isFunction(sortKey))
+            {
+                start=sortKey;
+                sortKey=false;
+            }
+            else if(!isNaN(sortKey))
+            {
+                callback=count;
+                count=start;
+                start=sortKey;
+                sortKey=false;
+            }
+            if($.isFunction(start))
+            {
+                callback=start;
+                start=count=false;
+            }
+        }
+        var args=[key];
+        if(sortKey!==false)
+        {
+            args.push('BY');
+            args.push(sortKey);
+        }
+        if(start!==false)
+        {
+            args.push('LIMIT');
+            args.push(start);
+            args.push(count);
+        }
+        for(var i in columns)
+		{
+            args.push('GET');
+            if(columns[i]=='id')
+                args.push('#');
+            else if(columns[i].charAt(0)!='*')
+                args.push('*->'+columns[i]);
+            else
+            {
+                args.push(columns[i]);
+                columns[i]=columns[i].substring(columns[i].indexOf('->')+2);
+            }
+		}
+		args.push('ALPHA');
+        $.db.sort(args, function(error, replies){
+            var result=[];
+            if(error)
+                return callback(error);
+
+            for(var i=0; i<replies.length;)
+            {
+                var item={};
+                for(var c in columns)
+                {
+                    item[columns[c]]=replies[i++];
+                }
+                result.push(item);
+            }
+            callback(null, result);
+        });
+    };
 };
 
 $(function(req,res,next){

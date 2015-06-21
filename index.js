@@ -3,6 +3,8 @@ process.env.DEBUG='jnode:*';
 
 global.Queue=function(processor, queue)
 {
+    if(this==global)
+        return new Queue(processor, queue);
     var processing=false;
     var filePath=queue;
     if(typeof(queue)=='string')

@@ -18,6 +18,7 @@ route.on('code', function(url, params, unchanged){
               input.focus();
         });
         $('#fileExplorer').niceScroll({cursorborderradius :0, cursorwidth :10, cursorborder :'0px', autohidemode:'leave', cursorcolor:'#646464', cursoropacitymax:0.7, horizrailenabled:false});
+        $('#git').niceScroll({cursorborderradius :0, cursorwidth :10, cursorborder :'0px', autohidemode:'leave', cursorcolor:'#646464', cursoropacitymax:0.7, horizrailenabled:false});
         // $('#explorer').resizable({handles:"e", maxWidth:375, stop:function(){
         //     $("#fileExplorer").getNiceScroll().resize();
         // }});
@@ -223,6 +224,77 @@ route.on('code', function(url, params, unchanged){
             editor.focus();
         };
 
+        $('#git').on('click', '.fa-upload', function(){
+            var treeNode=$(this).closest('.node');
+            var node=treeNode.data('node');
+            debugger;
+            $.ajax({url:'/api/explorer/git/stage/'+encodeURIComponent(node.path)+'?root='+encodeURIComponent(node.parent.path), type:'post', success:function(){
+                $('#git').tree('refresh');
+            }});
+        });
+        $('#git').tree({
+            source:'/api/explorer/git',
+            children:function(node){
+                return node.files;
+            },
+            label:function(node)
+            {
+                var actions='<span class="fa fa-upload pull-right"></span>';
+                var classNames='glyphicon ';
+                if(node.files)
+                    classNames+='glyphicon-folder-close';
+                else
+                {
+                    var extension=node.path.match(/\.[A-Z]+$/i);
+                    if(extension)
+                        switch(extension[0])
+                        {
+                            case '.css':
+                                classNames+='css ';
+                                break;
+                            case '.html':
+                            case '.htm':
+                                classNames+='html ';
+                                break;
+                            case '.xml':
+                                classNames+='xml ';
+                                break;
+                            case '.json':
+                                classNames+='json ';
+                                break;
+                            case '.js':
+                            case '.jnode':
+                            case '.onsm':
+                                classNames+='js ';
+                                break;
+                            default:
+                                classNames+='glyphicon-file ';
+                                break;
+                        }
+                    else
+                        classNames+='glyphicon-file ';
+                    if(node.status.indexOf('WT_NEW')>-1)
+                    {
+                        actions='<span class="fa fa-question-circle"></span>'+actions;
+                    }
+                }
+                return actions+'<span class="'+classNames+'"></span>\
+                 '+node.path; 
+            },
+            focusedNodeChanged:function(ev, treeNode){
+                var file=activeFile=$(treeNode).data('node').url;
+                if(!$(treeNode).data('node').isLeaf)
+                {
+                    $('#fileExplorer').data('treeOptions')._toggleTreeNode.call(treeNode);
+                    $("#fileExplorer").getNiceScroll().resize();
+                }
+                else
+                {
+                    openFile(file);
+                }
+            },
+            loaded:function(){ $("#fileExplorer").getNiceScroll().resize(); }
+        });
 
         $('#fileExplorer').tree({
             source:'/api/explorer',
@@ -262,11 +334,19 @@ route.on('code', function(url, params, unchanged){
                     else
                         classNames+='glyphicon-file ';
                 }
+                if(node.hasChanged)
+                    return '<span class="glyphicon glyphicon-exclamation-sign"></span>\
+                     <span class="has-changed '+classNames+'"></span>\
+                     <span class="glyphicon glyphicon-refresh refresh pull-right"></span>\
+                     <span class="glyphicon glyphicon-plus addFolder pull-right"></span>\
+                     <span class="glyphicon glyphicon-plus addFile pull-right"></span>\
+                     '+node.name; 
                  return '<span class="'+classNames+'"></span>\
                  <span class="glyphicon glyphicon-refresh refresh pull-right"></span>\
                  <span class="glyphicon glyphicon-plus addFolder pull-right"></span>\
                  <span class="glyphicon glyphicon-plus addFile pull-right"></span>\
-                 '+node.name; },
+                 '+node.name; 
+                 },
             key:function(node){ return node.url; },
             children:function(node){ return !node.isLeaf && node.url; },
             focusedNodeChanged:function(ev, treeNode){

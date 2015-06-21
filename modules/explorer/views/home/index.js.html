@@ -6,22 +6,22 @@
     {
         height:100%;
     }
-
-    #fileExplorer
+    
+    #fileExplorer, #git
     {
         overflow-y:auto;
         overflow-x:hidden;
         height:calc(100% - 30px);
     }
 
-    #fileExplorer .node
+    .ui-widget-tree .node
     {
         padding:2px 0;
         white-space: nowrap;
         text-overflow:ellipsis;
 	}
-
-    #fileExplorer .label
+	
+    .ui-widget-tree .label
     {
         color:black;
         font-weight:normal !important;
@@ -58,40 +58,57 @@
         display:none !important;
     }
 
-    #fileExplorer .glyphicon-folder-close,
-    #fileExplorer .glyphicon-folder-open
+    .ui-widget-tree .glyphicon-folder-close,
+    .ui-widget-tree .glyphicon-folder-open
     {
         color:GoldenRod;
     }
+    
+    #fileExplorer .has-changed.glyphicon-folder-close,
+    #fileExplorer .has-changed.glyphicon-folder-open
+    {
+        color:FireBrick;
+    }
+    
+    #fileExplorer .glyphicon.glyphicon-exclamation-sign
+    {
+        display:none;
+    }
 
-    #fileExplorer .label .js:before
+    #fileExplorer .leaf .glyphicon.glyphicon-exclamation-sign
+    {
+        display:inline;
+        color:FireBrick;
+    }
+
+    .ui-widget-tree .label .js:before
     {
         content:'JS';
         color:GoldenRod;
         font-family:'Segoe UI Light';
         font-weight:bold;
     }
-    #fileExplorer .label .json:before
+    .ui-widget-tree .label .json:before
     {
         content:'JSON';
         font-family:'Segoe UI Light';
         color:DarkRed;
         font-weight:bold;
     }
-    #fileExplorer .label .html:before
+    .ui-widget-tree .label .html:before
     {
         content:'HTML';
         font-family:'Segoe UI Light';
         color:DarkGreen;
         font-weight:bold;
     }
-    #fileExplorer .label .css:before
+    .ui-widget-tree .label .css:before
     {
         content:'CSS';
         font-family:'Segoe UI Light';
         font-weight:bold;
     }
-    #fileExplorer .label .xml:before
+    .ui-widget-tree .label .xml:before
     {
         content:'XML';
         font-family:'Segoe UI Light';
@@ -160,10 +177,16 @@
         border-bottom-color:yellow;
     }
 </style>
-<div id="explorer" class="col-md-3">
-    <div id="toolbar">
-    </div>
-    <div id="fileExplorer">
+<div id="explorer" class="col-md-3" role="tabpanel">
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#fileExplorer" aria-controls="fileExplorer" role="tab" data-toggle="tab" class="fa fa-files-o"></a></li>
+        <li role="presentation"><a href="#git" aria-controls="git" role="tab" data-toggle="tab"><span class="fa fa-code-fork"></span></a></li>
+    </ul>
+    <div class="tab-content">
+        <div id="fileExplorer" role="tabpanel" class="tab-pane active">
+        </div>
+        <div id="git" role="tabpanel" class="tab-pane">
+        </div>
     </div>
 </div>
 <div class="col-md-9" style="background-color:white; height:calc(100% - 30px)">
