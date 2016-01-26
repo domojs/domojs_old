@@ -1,5 +1,5 @@
 process.env.NODE_ENV='dev';
-process.env.DEBUG='jnode:*';
+process.env.DEBUG='jnode:noble*,jnode:core';
 
 global.Queue=function(processor, queue)
 {

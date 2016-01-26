@@ -70,7 +70,9 @@
     <script type="text/javascript">
         if(typeof(require)!='undefined')
         {
-            window.$ = window.jQuery = require(process.cwd()+"\\pwic\\jquery-2.1.0.min.js");
+            console.log(require('module').globalPaths);
+            window.cwd=process.cwd();
+            window.$ = window.jQuery = require(process.cwd()+"/jquery-2.1.0.min.js");
             window.remote=require('remote');
         }
     </script>

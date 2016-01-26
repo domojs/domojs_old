@@ -1,10 +1,12 @@
-
+var EventEmitter=require('events');
 exports.init = function (config, app)
 {
     var io = $('socket.io').listen(global.server);
     
     if(global.localServer)
         var io2=$('socket.io').listen(global.localServer);
+        
+    var bus=new EventEmitter();
 
     // io.configure('production', function ()
     // {
@@ -20,9 +22,11 @@ exports.init = function (config, app)
         io.on.apply(io, arguments); 
         if(io2) 
             io2.on.apply(io2, arguments); 
+        bus.on.apply(bus, arguments);
     };
 
     $.emit = function(){ 
+        bus.emit.apply(bus, arguments); 
         io.sockets.emit.apply(io.sockets, arguments); 
         if(io2) 
             io2.sockets.emit.apply(io2.sockets, arguments);
@@ -33,7 +37,7 @@ exports.init = function (config, app)
         io.to(to).emit(eventName, message);
         if(io2)
             io2.to(to).emit(eventName, message);
-   }
+   };
     
     $.on('connection', function(socket){
         socket.on('join', function(roomName){

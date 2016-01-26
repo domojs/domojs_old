@@ -1,5 +1,5 @@
 var debug=$('debug')('jnode:browser');
-var git = require('nodegit').Repository;
+/*var git = require('nodegit').Repository;
 var StatusFile = require('nodegit').StatusFile;
 var Status = require('nodegit').Status;
 if(typeof(git.prototype.getStatus)=='undefined')
@@ -18,7 +18,7 @@ if(typeof(git.prototype.getStatus)=='undefined')
       debug('getting status ');
       return Status.foreachExt(this, opts, statusCallback);
     };
-}
+}*/
 exports.init=function(config)
 {
 	$.each(config, function(baseUrl, item){
@@ -54,7 +54,7 @@ exports.init=function(config)
 	                            {
 	                                return next(error);
 	                            }
-                                var result=git.openExt(item+req.params.wildcard, 0, $('path').resolve(item+'/..')).then(function(repo){
+                                /*var result=git.openExt(item+req.params.wildcard, 0, $('path').resolve(item+'/..')).then(function(repo){
                                     repo.getStatus({
                                       flags: Status.OPT.INCLUDE_UNTRACKED | Status.OPT.RENAMES_INDEX_TO_WORKDIR,
                                       show: Status.SHOW.WORKDIR_ONLY 
@@ -81,7 +81,7 @@ exports.init=function(config)
         
                                         res.send(nodes.concat(leaves));
                                     },  function(err){
-                                        debug(err);
+                                        debug(err);*/
                                         var nodes=[],leaves=[];
                                             $.each(files, function(index,file){
                                                 node={name:$('path').basename(file), url:baseUrl+req.params.wildcard+file};
@@ -92,7 +92,7 @@ exports.init=function(config)
                                             });
     
                                             res.send(nodes.concat(leaves));
-                                    });
+                                    /*});
                                 }, function(err){
                                     debug(err);
                                     var nodes=[],leaves=[];
@@ -105,7 +105,7 @@ exports.init=function(config)
                                         });
 
                                         res.send(nodes.concat(leaves));
-                                });
+                                });*/
                             });
                         }
                     }

@@ -51,6 +51,42 @@ deviceTypes.virtual={
     }
 };
 
+
+deviceTypes.virtualState={
+    name:'virtualState',
+    onChange:function(){
+        return 'static';
+    },
+    onAdd:function(){
+        $('<li class="form-group">')
+            .append('<div class="col-sm-2"><input type="text" class="state form-control" placeholder="State" /></div>')
+            .appendTo('#commands');
+
+    },
+    onSave:function(data){
+        var states=[];
+        
+        $('#commands li').each(function(index, item){
+            commands.push($('.state', item).val());
+        });
+        data.append('states', JSON.stringify(states));
+    },
+    onServerSave:function(device, body){
+        var states=body.states;
+        if(typeof(states)=='string')
+            var states=JSON.parse(states);
+        device.status=function(callback){
+            callback(device.state);
+        };
+        $.each(states, function(index, command){
+            device.commands[command]=function(){
+                device.state=command;
+                device.emit('status', command);
+            };
+        });
+    }
+};
+
 deviceTypes.complexVirtual={
     name:'complex virtual',
     onChange:function(){

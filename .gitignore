@@ -31,3 +31,4 @@ modules/device/devices.json
 jnode.config
 channels.json
 settings.json
+modules/explorer/node_modules

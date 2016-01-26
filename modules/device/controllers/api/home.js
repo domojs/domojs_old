@@ -1,16 +1,9 @@
 module.exports={
     add:function(body, callback)
     {
-        var device={name:body.name, type:body.type, category:body.category, commands:{}};
-        $.ajax({url:{hostname:'localhost', protocol:'http', port:global.port, pathname:'/js/device.js'}, success:function(data)
-        {
-            var deviceTypes={};
-            $('vm').runInContext(data, $('vm').createContext({$:$, deviceTypes:deviceTypes, console:{log:console.log}}), 'js/device.js'); 
-            if(typeof(deviceTypes[device.type])!='undefined' && typeof(deviceTypes[device.type].onServerSave)!='undefined')
-                deviceTypes[device.type].onServerSave(device, body);
-            $.device(device, body);
+        $.device(null, body, function(device){
             callback(200);
-        }});
+        });
     },
 	get:function(id, cmd, status, callback)
 	{

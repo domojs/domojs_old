@@ -1,3 +1,5 @@
+var EventEmitter=require('events');
+
 devices={};
 var savedDevices=[];
 var initializing=true;
@@ -10,7 +12,8 @@ exports.init=function(config){
     $('fs').exists('./modules/device/devices.json', function(exists){
       if(!exists)  
         {
-            console.log('could not find file devices.json')
+            console.log('could not find file devices.json');
+            initializing=false;
             return ;
         }
         console.log('loading devices');
@@ -23,13 +26,33 @@ exports.init=function(config){
     });
 };
 
-$.device=function register(device, body)
+$.device=function register(device, body, callback)
 {
 	if(typeof(device)=='undefined')
 		return devices;
+    if(callback)
+    {
+        device=new EventEmitter();
+        device.name=body.name;
+        device.type=body.type;
+        device.category=body.category;
+        device.commands={};
+
+        $.ajax({url:{hostname:'localhost', protocol:'http', port:global.port, pathname:'/js/device.js'}, success:function(data)
+        {
+            var deviceTypes={};
+            $('vm').runInContext(data, $('vm').createContext({$:$, deviceTypes:deviceTypes, console:{log:console.log, error:console.error}, process:process, Buffer:Buffer}), 'js/device.js'); 
+            if(typeof(deviceTypes[device.type])!='undefined' && typeof(deviceTypes[device.type].onServerSave)!='undefined')
+                deviceTypes[device.type].onServerSave(device, body);
+            $.device(device, body);
+            callback(device);
+        }});
+        return;
+    }
     if(typeof(devices[device.type])=='undefined')
         Object.defineProperty(devices, device.type, {configurable:false, enumerable:device.type.indexOf('.')!==0, writable:false, value:[]});
     devices[device.type].push(device);
+    $.emit('device.new', device);
     device.remove=function(){
         var indexOfThis=devices[device.type].indexOf(this);
         devices[device.type].splice(indexOfThis, 1);

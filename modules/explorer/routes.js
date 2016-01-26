@@ -1,8 +1,27 @@
 route.on('code', function(url, params, unchanged){
+    function modal(config)
+    {
+        var dialog=$('#modal');
+        dialog.find('.modal-body').append(config.content);
+        dialog.find('.modal-title').text(config.title);
+        if(config.footer)
+            dialog.find('.modal-footer').append(config.footer);
+        if($.isFunction(config.onOpen))
+            dialog.one('shown.bs.modal', config.onOpen);
+        if($.isFunction(config.onClose))
+            dialog.one('hidden.bs.modal', config.onClose);
+        dialog.modal();
+        dialog.one('hidden.bs.modal', function(){
+            $('#modal .modal-body').empty();
+            $('#modal .modal-title').empty();
+            $('#modal .modal-footer').empty();
+        });
+    
+    }
+    
+    
     $.ajax(loadHtml('explorer', function(){
         $('#editor').bindKey('ctrl+,', function(){
-            var dialog=$('<div></div>').css('z-index', 10000).dialog();
-
             var input=$('<input />').desccomplete({
                 autoFocus:true,
                 source:'/explorer/search',
@@ -14,8 +33,10 @@ route.on('code', function(url, params, unchanged){
                     activeFile=ui.item.value;
                     openFile(ui.item.value);
                     dialog.dialog('close');
-              }}).appendTo(dialog);
-              input.focus();
+              }});
+              modal({title:'File search', content:input, onOpen:function(){
+                  input.focus();
+              }});
         });
         $('#fileExplorer').niceScroll({cursorborderradius :0, cursorwidth :10, cursorborder :'0px', autohidemode:'leave', cursorcolor:'#646464', cursoropacitymax:0.7, horizrailenabled:false});
         $('#git').niceScroll({cursorborderradius :0, cursorwidth :10, cursorborder :'0px', autohidemode:'leave', cursorcolor:'#646464', cursoropacitymax:0.7, horizrailenabled:false});
@@ -25,23 +46,28 @@ route.on('code', function(url, params, unchanged){
         $('#fileExplorer').on('click', '.addFolder', function(){
             var treeNode=$(this).closest('.node');
             var path=treeNode.data('node').url;
-            $('<div><input id="folderName" name="folder" /></div>').dialog({title:'folder name', buttons:{OK:function(){
-                path+='/'+$('#folderName', this).val();
-                if($('#folderName', this).val()!=null)
+            var button=$('<a class="btn btn-lg btn-success">OK</a>').click(function(){
+                path+='/'+$('#modal #folderName').val();
+                if($('#modal #folderName').val()!=null)
                 {
                     $.ajax({url:path, type:'post', success:function(){
                         treeNode.tree('refresh');
                     }});
-                    $(this).dialog('close');
+                    $('#modal').modal('hide');
                 }
-            }}});
+            });
+            modal({title:'Add Folder', content:$('<input id="folderName" name="folder"/>').bindKey('enter', function(){
+                button.click();
+            }), onOpen:function(){
+                $('#folderName').focus();
+            }, footer:button});
         });
         $('#fileExplorer').on('click', '.addFile', function(){
             var treeNode=$(this).closest('.node');
             var path=treeNode.data('node').url;
-            $('<div><input id="fileName" name="file" /></div>').dialog({title:'file name', buttons:{OK:function(){
-                path+='/'+$('#fileName', this).val();
-                if($('#fileName', this).val()!=null)
+            var button=$('<a class="btn btn-lg btn-success">OK</a>').click(function(){
+                path+='/'+$('#modal #fileName').val();
+                if($('#modal #fileName').val()!=null)
                 {
                     openFile(path);
                     openedFiles[path].data('lastSavedAt', -1);
@@ -49,9 +75,14 @@ route.on('code', function(url, params, unchanged){
                         treeNode.tree('refresh');
                         openedFiles[path].data('onSave', null);
                     });
-                    $(this).dialog('close');
+                    $('#modal').modal('hide');
                 }
-            }}});
+            });
+            modal({title:'Add file', content:$('<input id="fileName" name="file" />').bindKey('enter', function(){
+                  button.click();
+              }), onOpen:function(){
+                $('#fileName').focus();
+            }, footer:button});
         });
         
         $('#fileExplorer').on('click', '.refresh', function(){

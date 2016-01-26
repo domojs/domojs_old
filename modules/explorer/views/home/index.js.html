@@ -7,11 +7,11 @@
         height:100%;
     }
     
-    #fileExplorer, #git
+    #explorer .tab-content
     {
         overflow-y:auto;
         overflow-x:hidden;
-        height:calc(100% - 30px);
+        height:calc(100% - 45px);
     }
 
     .ui-widget-tree .node
@@ -194,5 +194,19 @@
     </ul>
     <div id="editor" class="row"> </div>
 </div>
-<script src="/assets/explorer/js/jstree.js" />
-<script src="/assets/explorer/js/ace/ace.js" />
+<script src="/assets/explorer/js/jstree.js" ></script>
+<script src="/assets/explorer/js/ace/ace.js"></script>
+<div id="modal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
