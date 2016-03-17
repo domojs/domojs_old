@@ -6,12 +6,7 @@ var getInfo=function(callback)
 };
 
 module.exports={
-	get:function(callback){
-		getInfo(callback);
-	},
-	temperature:function(callback){
-		getInfo(function(data){
-			callback({celsius:data.current_observation.temp_c, fahrenheit:data.current_observation.temp_f});
-		});
+	restart:function(callback){
+		process.exit();
 	}
 }

@@ -1,60 +1,66 @@
 [submodule "domojs-wol"]
 	path = modules/wol
-	url = git@github.com:npenin/domojs-wol.git
+	url = git@github.com:domojs/domojs-wol.git
 [submodule "domojs-freebox"]
 	path = modules/freebox
-	url = git@github.com:npenin/domojs-freebox.git
+	url = git@github.com:domojs/domojs-freebox.git
 [submodule "domojs-downloadmanager"]
 	path = modules/download-manager
-	url = git@github.com:npenin/domojs-downloadmanager.git
+	url = git@github.com:domojs/domojs-downloadmanager.git
 [submodule "domojs-gpio"]
 	path = modules/gpio
-	url = git@github.com:npenin/domojs-gpio.git
+	url = git@github.com:domojs/domojs-gpio.git
 [submodule "domojs-hdhomerun"]
 	path = modules/hdhomerun
-	url = git@github.com:npenin/domojs-hdhomerun.git
+	url = git@github.com:domojs/domojs-hdhomerun.git
 [submodule "domojs-pioneer"]
 	path = modules/pioneer
-	url = git@github.com:npenin/domojs-pioneer.git
+	url = git@github.com:domojs/domojs-pioneer.git
 [submodule "domojs-media"]
 	path = modules/media
-	url = git@github.com:npenin/domojs-mediacenter.git
+	url = git@github.com:domojs/domojs-mediacenter.git
 [submodule "domojs-pages"]
 	path = modules/pages
-	url = git@github.com:npenin/domojs-pages.git
+	url = git@github.com:domojs/domojs-pages.git
 [submodule "domojs-sq-blaster"]
 	path = modules/sq-blaster
-	url = git@github.com:npenin/domojs-sqblaster.git
+	url = git@github.com:domojs/domojs-sqblaster.git
 [submodule "domojs-weather"]
 	path = modules/weather
-	url = git@github.com:npenin/domojs-weather.git
+	url = git@github.com:domojs/domojs-weather.git
 [submodule "mvc"]
 	path = node_modules/mvc
-	url = git@github.com:npenin/node-mvc
+	url = git@github.com:domojs/node-mvc
 [submodule "users"]
 	path = modules/users
-	url = git@github.com:npenin/domojs-users
+	url = git@github.com:domojs/domojs-users
 [submodule "ifttt"]
 	path = modules/ifttt
-	url = git@github.com:npenin/domojs-ifttt
+	url = git@github.com:domojs/domojs-ifttt
 [submodule "chat"]
 	path = modules/chat
-	url = git@github.com:npenin/jarvis
+	url = git@github.com:domojs/jarvis
 [submodule "jnode"]
 	path = node_modules/jnode
-	url = git@github.com:npenin/jnode 
+	url = git@github.com:domojs/jnode 
 [submodule "lifttt"]
 	path = lifttt
-	url = git@github.com:npenin/lifttt
+	url = git@github.com:domojs/lifttt
 [submodule "domojs-rfxcom"]
 	path = modules/rfxcom
-	url = git@github.com:npenin/domojs-rfxcom.git
+	url = git@github.com:domojs/domojs-rfxcom.git
 [submodule "history"]
 	path = modules/history
-	url = git@github.com:npenin/domojs-history.git
+	url = git@github.com:domojs/domojs-history.git
 [submodule "bluetooth"]
 	path = modules/bluetooth
-	url = git@github.com:npenin/domojs-bluetooth.git
+	url = git@github.com:domojs/domojs-bluetooth.git
 [submodule "zwave"]
 	path = modules/zwave
-	url = git@github.com:npenin/domojs-zwave.git
+	url = git@github.com:domojs/domojs-zwave.git
+[submodule "modules/news"]
+	path = modules/news
+	url = git@github.com:domojs/domojs-news.git
+[submodule "modules/stock"]
+	path = modules/stock
+	url = git@github.com:domojs/domojs-stock.git

@@ -1,6 +1,5 @@
 var debug=$('debug')('jnode:db');
 var redis=require('redis');
-var client;
 
 exports.init=function(config, app){
     var port=$.settings('db.port');
@@ -11,6 +10,8 @@ exports.init=function(config, app){
         $.settings('db.port', 6379);
     else if(!host)
         $.settings('db.host', 'localhost');
+    
+    $.db=buildClient();
     
     app.use(function(req,res,next){
         var client;
@@ -23,12 +24,14 @@ exports.init=function(config, app){
 		if(password)
 			client.auth(password, function(){
                 next();
-                res.on('finish', function(){
-                    client.quit();
-                    client=null;
-                });
             });
-        next();
+        else
+            next();
+        res.on('finish', function(){
+            if(client)
+                client.quit();
+            client=null;
+        });
     });
     
     function buildClient(){
@@ -109,25 +112,4 @@ exports.init=function(config, app){
         
         return db;
     }
-    
-    Object.defineProperty($, 'db', {
-        get:function(){
-            if(!client)
-                client=buildClient();
-            return client;
-        }
-    });
-    
-    
 };
-
-$(function(req,res,next){
-    client.loadDatabase(function(){
-        db.find(req.body.filter).skip(req.body.skip).limit(req.body.take).exec(function(err, results){
-            if(err)
-                res.send(500, err);
-            else
-                res.send(results);
-        });
-    });
-}).post('/db/{collection}');

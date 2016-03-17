@@ -8,7 +8,7 @@
     
                     
     socket.on('message', function(msg){
-            $('<li></li>').text(msg).appendTo($module.find('.dropdown-menu'));
+            $('<li></li>').text(msg.text || msg).appendTo($module.find('.dropdown-menu'));
             $module.find('.badge').text($module.find('.dropdown-menu li').length);
         });
     

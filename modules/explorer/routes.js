@@ -37,12 +37,123 @@ route.on('code', function(url, params, unchanged){
               modal({title:'File search', content:input, onOpen:function(){
                   input.focus();
               }});
+        }).bindKey('ctrl+tab', function(){
+            var wasPrevious=false;
+            for(var file in openFiles)
+            {
+                if(wasPrevious)
+                {
+                    activeFile=file;
+                    setContent();
+                    break;
+                }
+                if(file==activeFile)
+                    wasPrevious=true;
+            }
         });
-        $('#fileExplorer').niceScroll({cursorborderradius :0, cursorwidth :10, cursorborder :'0px', autohidemode:'leave', cursorcolor:'#646464', cursoropacitymax:0.7, horizrailenabled:false});
-        $('#git').niceScroll({cursorborderradius :0, cursorwidth :10, cursorborder :'0px', autohidemode:'leave', cursorcolor:'#646464', cursoropacitymax:0.7, horizrailenabled:false});
-        // $('#explorer').resizable({handles:"e", maxWidth:375, stop:function(){
-        //     $("#fileExplorer").getNiceScroll().resize();
-        // }});
+        
+        var arrowFunctions={
+            left:function expLeft(){
+                var activeNode=$('#fileExplorer .ui-state-focus').closest('.node');
+                if(!activeNode.closest('li').hasClass('expanded'))
+                {
+                    activeNode=activeNode.parent().closest('.node');
+                    activeNode.tree('focus', activeNode);
+                }
+                else
+                    activeNode.tree('option')._toggleTreeNode.call(activeNode);
+                return false;
+            },
+            right:function expRight(){
+                var activeNode=$('#fileExplorer .ui-state-focus').closest('.node');
+                if(activeNode.closest('li').hasClass('expanded'))
+                    arrowFunctions.down();
+                else
+                    arrowFunctions.enter();
+                return false;
+            },
+            up:function expUp(){
+                var activeNode=$('#fileExplorer .ui-state-focus').closest('.node');
+                var index=activeNode.parent().index()-1;
+                if(index==-1)
+                    activeNode=activeNode.parent().closest('.node');
+                else
+                    activeNode=activeNode.parent().prev().find('.node:first');
+                if(activeNode.closest('li').hasClass('expanded'))
+                {
+                    activeNode=activeNode.find('>ul>li:last>.node');
+                }
+                activeNode.tree('focus', activeNode);
+                return false;
+            },
+            down:function expDown(){
+                var activeNode=$('#fileExplorer .ui-state-focus').closest('.node');
+                var currentNode=activeNode;
+                if(activeNode.closest('li').hasClass('expanded'))
+                    activeNode=currentNode.find('.node:first');
+                else
+                    activeNode=currentNode.parent().next().find('.node:first');
+                if(activeNode.length===0)
+                    activeNode=currentNode.parent().closest('.node').parent().next().find('.node:first');
+                if(activeNode.length==0)
+                    return;
+                activeNode.tree('focus', activeNode);
+
+                return false;
+            },
+            enter:function(){
+                var activeNode=$('#fileExplorer .ui-state-focus').closest('.node');
+                if(activeNode.data('node').isLeaf)
+                {
+                    activeFile=activeNode.data('node').url;
+                    openFile(activeFile);
+                }
+                else 
+                    activeNode.tree('option')._toggleTreeNode.call(activeNode);
+                return false;
+            },
+            search:function expSearch(ev){
+                var letter=String.fromCharCode(ev.charCode).toLowerCase();
+                if(letter.trim().length==0)
+                    return;
+                var activeNode=$('#fileExplorer .ui-state-focus').closest('.node');
+                var foundNode=false;
+                while(!foundNode && activeNode.attr('id')!='fileExplorer' && activeNode.length>0)
+                {
+                    activeNode.find('.node .label').each(function(){
+                        if(foundNode)
+                            return;
+                        if($(this).text().trim()[0].toLowerCase()==letter)
+                        {
+                            foundNode=this;
+                        }
+                    });
+                    activeNode=activeNode.parent().closest('.node');
+                }
+                activeNode.tree('focus', $(foundNode).closest('.node'));
+            },
+            scrollTo:function(element, callback)
+            {
+                var min = element[0].offsetTop + element.outerHeight();
+                var maxHeight = element.closest('.tab-content').innerHeight();
+                var idealPosition = maxHeight / 2;
+                if (element.outerHeight() - idealPosition > 0)
+                    element.parents().stop().animate({scrollTop:element[0].offsetTop-element.closest('.tab-content').offset().top}, {complete:callback});
+                else
+                    element.parents().stop().animate({scrollTop:element[0].offsetTop - idealPosition}, {complete:callback});
+            }
+        }
+        
+        
+        
+        $('#fileExplorer').focus().
+            bindKey('left', arrowFunctions.left).
+            bindKey('right', arrowFunctions.right).
+            bindKey('up', arrowFunctions.up).
+            bindKey('down', arrowFunctions.down).
+            bindKey('enter', arrowFunctions.enter).
+            bind('keypress', arrowFunctions.search);
+
         $('#fileExplorer').on('click', '.addFolder', function(){
             var treeNode=$(this).closest('.node');
             var path=treeNode.data('node').url;
@@ -145,9 +256,16 @@ route.on('code', function(url, params, unchanged){
                             session.on('change', function(e){
                                 setTimeout(function(){
                                 if(session.getUndoManager().$undoStack.length!=openedFiles[file].data('lastSavedAt'))
+                                {
                                     openedFiles[file].addClass('unsaved');
+                                    $('#fileExplorer').find('.node:has(> div > input[value="' + file + '"])').addClass('unsaved');
+
+                                }
                                 else
+                                {
                                     openedFiles[file].removeClass('unsaved');
+                                    $('#fileExplorer').find('.node:has(> div > input[value="' + file + '"])').removeClass('unsaved');
+                                }
                                 },0);
                             });
 
@@ -161,9 +279,15 @@ route.on('code', function(url, params, unchanged){
                                 session.on('change', function(e){
                                     setTimeout(function(){
                                     if(session.getUndoManager().$undoStack.length!=openedFiles[file].data('lastSavedAt'))
+                                    {
+                                        $('#fileExplorer').find('.node:has(> div > input[value="' + file + '"])').addClass('unsaved');
                                         openedFiles[file].addClass('unsaved');
+                                    }
                                     else
+                                    {
                                         openedFiles[file].removeClass('unsaved');
+                                        $('#fileExplorer').find('.node:has(> div > input[value="' + file + '"])').removeClass('unsaved');
+                                    }
                                     },0);
                                 });
     
@@ -197,6 +321,7 @@ route.on('code', function(url, params, unchanged){
                            openedFiles[file].data('onSave')(); 
                         openedFiles[file].data('lastSavedAt', openedFiles[file].data('session').getUndoManager().$undoStack.length);
                         openedFiles[file].removeClass('unsaved');
+                        $('#fileExplorer .node:has(>.ui-state-focus)').removeClass('unsaved');
 						$.gritter.add({title:'Code Editor', text:'file save successfully'});
                     }
 					else
@@ -252,13 +377,13 @@ route.on('code', function(url, params, unchanged){
             }
             else
                 editor.setSession(ace.createEditSession('', 'ace/mode/text'));
+            $('#fileExplorer').tree('focus', activeFile);
             editor.focus();
         };
 
         $('#git').on('click', '.fa-upload', function(){
             var treeNode=$(this).closest('.node');
             var node=treeNode.data('node');
-            debugger;
             $.ajax({url:'/api/explorer/git/stage/'+encodeURIComponent(node.path)+'?root='+encodeURIComponent(node.parent.path), type:'post', success:function(){
                 $('#git').tree('refresh');
             }});
@@ -312,19 +437,22 @@ route.on('code', function(url, params, unchanged){
                 return actions+'<span class="'+classNames+'"></span>\
                  '+node.path; 
             },
-            focusedNodeChanged:function(ev, treeNode){
-                var file=activeFile=$(treeNode).data('node').url;
-                if(!$(treeNode).data('node').isLeaf)
+            focusedNodeChanged:function(ev, treeNode, target){
+                if(target)
                 {
-                    $('#fileExplorer').data('treeOptions')._toggleTreeNode.call(treeNode);
-                    $("#fileExplorer").getNiceScroll().resize();
-                }
-                else
-                {
-                    openFile(file);
+                    var file=$(treeNode).data('node').url;
+                    if(!$(treeNode).data('node').isLeaf)
+                    {
+                        $('#fileExplorer').data('treeOptions')._toggleTreeNode.call(treeNode);
+                    }
+                    else
+                    {
+                        activeFile=file;
+                        openFile(file);
+                    }
                 }
             },
-            loaded:function(){ $("#fileExplorer").getNiceScroll().resize(); }
+            loaded:function(){ }
         });
 
         $('#fileExplorer').tree({
@@ -380,19 +508,25 @@ route.on('code', function(url, params, unchanged){
                  },
             key:function(node){ return node.url; },
             children:function(node){ return !node.isLeaf && node.url; },
-            focusedNodeChanged:function(ev, treeNode){
-                var file=activeFile=$(treeNode).data('node').url;
+            focusedNodeChanged:function(ev, treeNode, target){
+
+                if(!target)
+                {
+                    arrowFunctions.scrollTo(treeNode);
+                    return;
+                }
+                var file=$(treeNode).data('node').url;
                 if(!$(treeNode).data('node').isLeaf)
                 {
                     $('#fileExplorer').data('treeOptions')._toggleTreeNode.call(treeNode);
-                    $("#fileExplorer").getNiceScroll().resize();
                 }
                 else
                 {
+                    activeFile=file;
                     openFile(file);
                 }
             },
-            loaded:function(){ $("#fileExplorer").getNiceScroll().resize(); }
+            loaded:function(){  }
         });
     }));
 });

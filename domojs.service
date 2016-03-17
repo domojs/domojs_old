@@ -1,0 +1,12 @@
+[Service]
+Environment="NODE_ENV=production"
+ExecStart=/usr/bin/node /home/pi/domojs
+Restart=always
+WorkingDirectory=/home/pi/domojs
+StandardOutput=syslog
+SyslogIdentifier=domojs
+User=domojs
+Group=domojs
+
+[Install]
+WantedBy=multi-user.target

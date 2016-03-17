@@ -93,11 +93,19 @@
         
         socket.on('message', function(msg){
             $.gritter.add(msg);
+            
+            Notification.requestPermission( function(status) {
+              console.log(status); // les notifications ne seront affichées que si "autorisées"
+              var n = new Notification("Message", {body: msg.text || msg, icon:msg.image}); // this also shows the notification
+            });
+        });
+        
+        socket.on('refresh', function(){
+            location.reload();
         });
       
         $('#modulePlaceHolder').prepend('<li style="height:1em;width:200px;"></li>');
     </script>
 	<script type="text/javascript" src="js/module.js"></script>
-    <script src="//cdn.goroost.com/roostjs/b64db3fda5ea4835bf143f32d29efb11"></script>
   </body>
 </html>

@@ -2,6 +2,7 @@
 <link rel="stylesheet" href="/assets/core/css/jquery-ui.css" />
 <link rel="stylesheet" href="/assets/explorer/css/jstree.css" />
 <style type="text/css">
+
     #explorer
     {
         height:100%;
@@ -12,6 +13,40 @@
         overflow-y:auto;
         overflow-x:hidden;
         height:calc(100% - 45px);
+    }
+    
+    #explorer ::-webkit-scrollbar,
+    #editor ::-webkit-scrollbar
+    {
+        width:14px;
+        height:14px;
+    }
+    
+    #explorer ::-webkit-scrollbar-thumb,
+    #editor ::-webkit-scrollbar-thumb
+    {
+    	border: solid 0 transparent;
+    	border-right-width: 4px;
+    	border-radius: 5px;
+    	border-top-right-radius: 9px 5px;
+    	border-bottom-right-radius: 9px 5px;
+    	box-shadow: inset 0 0 0 1px rgb(79,79,79), inset 0 0 0 6px rgb(102,102,102);
+    }
+
+    #explorer ::-webkit-scrollbar-thumb:hover,
+    #editor ::-webkit-scrollbar-thumb:hover
+    {
+    	box-shadow: inset 0 0 0 1px rgb(90,90,90), inset 0 0 0 6px rgb(110,110,110);
+    }
+
+    #explorer ::-webkit-scrollbar-thumb:horizontal,
+    #editor ::-webkit-scrollbar-thumb:horizontal 
+    {
+    	border-right-width: 0;
+    	border-bottom-width: 4px;
+    	border-top-right-radius: 5px;
+    	border-bottom-right-radius: 5px 9px;
+    	border-bottom-left-radius: 5px 9px;
     }
 
     .ui-widget-tree .node
@@ -26,6 +61,13 @@
         color:black;
         font-weight:normal !important;
     }
+    
+    #fileExplorer:focus
+    {
+        outline:none;
+    }
+    
+    
     
     #fileExplorer .addFolder
     {
@@ -142,6 +184,20 @@
     {
         display:block;
     }
+    
+    #fileExplorer .unsaved .label
+    {
+        font-weight:bold;
+    }
+    
+    #fileExplorer .unsaved .label:after
+    {
+        content:"\26ab";
+        float:right;
+        color:darkred;
+        line-height:23px;
+        margin-right:10px;
+    }
 
 #fileTabs li.active a,
 #fileTabs li a:hover
@@ -183,7 +239,7 @@
         <li role="presentation"><a href="#git" aria-controls="git" role="tab" data-toggle="tab"><span class="fa fa-code-fork"></span></a></li>
     </ul>
     <div class="tab-content">
-        <div id="fileExplorer" role="tabpanel" class="tab-pane active">
+        <div id="fileExplorer" role="tabpanel" class="tab-pane active" tabindex="0">
         </div>
         <div id="git" role="tabpanel" class="tab-pane">
         </div>

@@ -36,7 +36,7 @@
         root.find('input[type=hidden].focusedNode').val(treeNode.data('node').value);
         root.find('.ui-state-focus').removeClass('ui-state-focus');
         treeNode.find('.ui-state-default:first').addClass('ui-state-focus');
-        root.trigger({ type: 'tree.focusedNodeChanged', target: ev && ev.target }, treeNode);
+        root.trigger({ type: 'tree.focusedNodeChanged', target: ev && ev.target }, [treeNode, ev && ev.target]);
     };
 
     var refresh = function (treeNode) {
@@ -94,7 +94,7 @@
                         if(Object.getPrototypeOf(value)==$.fn)
                             focus(value);
                         else
-                            focus($(this).find('.node input[value="' + value + '"]'));
+                            focus($(this).find('.node:has(> div > input[value="' + value + '"])'));
                         break;
                     case 'select':
 
@@ -174,6 +174,11 @@
                                             self.find('input[type=hidden].selection').val(selection.join(';'));
                                             root.trigger({ type: 'tree.selectionChanged' }, root);
                                         });
+                                    }
+                                    else
+                                    {
+                                        var inputTmpl = $('<input type="hidden" name="' + root[0].id + '" value="' + node.value + '" />');
+                                        treeNode.find(':first-child:first').prepend(inputTmpl);
                                     }
                                     childNodes.append($('<li class="collapsed"/>').append(treeNode));
                                     treeNode.find("span.ui-icon").click(toggleTreeNode);

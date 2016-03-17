@@ -31,6 +31,7 @@ exports.init = function (config, app)
         if(io2) 
             io2.sockets.emit.apply(io2.sockets, arguments);
     };
+    
    
    $.emitTo=function(eventName, to, message)
    {
@@ -48,6 +49,22 @@ exports.init = function (config, app)
             console.log('leaving '+roomName);
             socket.leave(roomName);
         });
+        
+        socket.on('error', function(error){
+            console.error(error);
+        });
+        
+        socket.on('message', function(message){
+            if(typeof(message)=='string')
+                message={text:message};
+            $.emit('message', message);
+        });
+        
+        socket.on('refresh', function(roomName){
+            if(!roomName)
+                $.emit('refresh', null);
+            else
+                $.emitTo('refresh', roomName, null);
+        });
     });
-
 };

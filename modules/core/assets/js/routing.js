@@ -47,7 +47,7 @@ $require('assets/core/js/matcher.js', function(matcher)
         {
             var url=location.hash.substr(1);
             if(!firstProcessed)
-                firstProcessed=true;
+                firstProcessed=route.$rules>0;
             for(var i in route.$rules)
             {
                 var rule=route.$rules[i];

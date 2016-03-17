@@ -2,11 +2,9 @@
 epg.xml
 test.js
 *.pfx
-node_modules/connect/
-node_modules/debug/
-node_modules/router/
-node_modules/socket.io-client/
-node_modules/socket.io/
+node_modules/
+!node_modules/jnode
+!node_modules/mvc
 messages.log
 .bin
 
@@ -32,3 +30,4 @@ jnode.config
 channels.json
 settings.json
 modules/explorer/node_modules
+

@@ -1,4 +1,4 @@
 route.on('leaving', function(){
-    if(page.leaving)
+    if(page && page.leaving)
         page.leaving();
 });

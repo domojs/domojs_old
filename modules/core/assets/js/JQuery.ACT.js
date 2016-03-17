@@ -42,9 +42,48 @@
 				case '²':
 					charCode=222;
 					break;
+				case 'f1':
+					charCode=112;
+					break;
+				case 'f2':
+					charCode=113;
+					break;
+				case 'f3':
+					charCode=114;
+					break;
+				case 'f4':
+					charCode=115;
+					break;
+				case 'f5':
+					charCode=116;
+					break;
+				case 'f6':
+					charCode=117;
+					break;
+				case 'f7':
+					charCode=118;
+					break;
+				case 'f8':
+					charCode=119;
+					break;
+				case 'f9':
+					charCode=120;
+					break;
+				case 'f10':
+					charCode=121;
+					break;
+				case 'f11':
+					charCode=122;
+					break;
+				case 'f12':
+					charCode=123;
+					break;
 				case ',':
 				    charCode=188;
 				    break;
+			    case 'tab':
+		            charCode=9;
+		            break;
                 default:
                     charCode = key.charCodeAt(0) - 97 + 65;
                     break;
