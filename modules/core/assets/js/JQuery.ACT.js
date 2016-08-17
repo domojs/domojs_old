@@ -12,6 +12,15 @@
                 case 'esc':
                     charCode = 27;
                     break;
+                case 'home':
+                    charCode = 36;
+                    break;
+                case 'del':
+                    charCode = 46;
+                    break;
+                case 'end':
+                    charCode = 35;
+                    break;
                 case 'enter':
                     charCode = 13;
                     break;
@@ -83,6 +92,18 @@
 				    break;
 			    case 'tab':
 		            charCode=9;
+		            break;
+			    case 'num0':
+			    case 'num1':
+			    case 'num2':
+			    case 'num3':
+			    case 'num4':
+			    case 'num5':
+			    case 'num6':
+			    case 'num7':
+			    case 'num8':
+			    case 'num9':
+		            charCode=96+Number(key.substr(3));
 		            break;
                 default:
                     charCode = key.charCodeAt(0) - 97 + 65;

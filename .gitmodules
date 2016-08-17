@@ -64,3 +64,15 @@
 [submodule "modules/stock"]
 	path = modules/stock
 	url = git@github.com:domojs/domojs-stock.git
+[submodule "modules/media-kodi"]
+	path = modules/media-kodi
+	url = git@github.com:domojs/domojs-media-kodi.git
+[submodule "modules/terminal"]
+	path = modules/terminal
+	url = git@github.com:domojs/domojs-terminal.git
+[submodule "modules/debug"]
+	path = modules/debug
+	url = git@github.com:domojs/domojs-debug.git
+[submodule "modules/letsencrypt"]
+	path = modules/letsencrypt
+	url = git@github.com:domojs/domojs-letsencrypt.git

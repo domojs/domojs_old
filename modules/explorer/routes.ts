@@ -31,69 +31,11 @@ route.on( 'code', function( url, params, unchanged ) {
 
             $.ajax( {
                 url: '/assets/explorer/js/monaco.d.ts', success: function( data ) {
-                    monaco.languages.typescript.javascriptDefaults.addExtraLib( data, 'modules/explorer/assets/js/monaco.d.ts' );
-                    monaco.languages.typescript.typescriptDefaults.addExtraLib( data, 'modules/explorer/assets/js/monaco.d.ts' );
+                    monaco.languages.typescript.javascriptDefaults.addExtraLib( data, '/assets/explorer/js/monaco.d.ts' );
                 }
             });
 
-            $.ajax( {
-                url: '/assets/core/jquery.d.ts', success: function( data ) {
-                    monaco.languages.typescript.javascriptDefaults.addExtraLib( data, 'modules/core/assets/jquery.d.ts' );
-                    monaco.languages.typescript.typescriptDefaults.addExtraLib( data, 'modules/core/assets/jquery.d.ts' );
-                }
-            });
-
-            $.ajax( {
-                url: '/assets/core/bootstrap.d.ts', success: function( data ) {
-                    monaco.languages.typescript.javascriptDefaults.addExtraLib( data, 'modules/core/assets/bootstrap.d.ts' );
-                    monaco.languages.typescript.typescriptDefaults.addExtraLib( data, 'modules/core/assets/bootstrap.d.ts' );
-                }
-            });
-
-            $.ajax( {
-                url: '/assets/core/module.d.ts', success: function( data ) {
-                    monaco.languages.typescript.javascriptDefaults.addExtraLib( data, 'modules/device/core/module.d.ts' );
-                    monaco.languages.typescript.typescriptDefaults.addExtraLib( data, 'modules/device/core/module.d.ts' );
-                }
-            });
-
-            $.ajax( {
-                url: '/assets/device/module.d.ts', success: function( data ) {
-                    monaco.languages.typescript.javascriptDefaults.addExtraLib( data, 'modules/device/assets/module.d.ts' );
-                    monaco.languages.typescript.typescriptDefaults.addExtraLib( data, 'modules/device/assets/module.d.ts' );
-                }
-            });
-
-            $.ajax( {
-                url: '/assets/core/node.d.ts', success: function( data ) {
-                    monaco.languages.typescript.javascriptDefaults.addExtraLib( data, 'modules/core/assets/node.d.ts' );
-                    monaco.languages.typescript.typescriptDefaults.addExtraLib( data, 'modules/core/assets/node.d.ts' );
-                }
-            });
-
-
-            $.ajax( {
-                url: '/assets/explorer/schema.json', success: function( metaSchema ) {
-                    $.ajax( {
-                        url: '/assets/ifttt/schema.json', success: function( lifttt ) {
-                            monaco.languages.json.jsonDefaults.setDiagnosticsOptions( {
-                                schemas: [ {
-                                    uri: 'http://json-schema.org/draft-04/schema#',
-                                    schema: data
-                                },
-                                {
-                                    uri:'https://home.dragon-angel.fr/lifttt',
-                                    fileMatch:['recipes.json'],
-                                    schema:lifttt
-                                }]
-                            });
-                        }
-                    });
-                }
-            });
-
-
-            e.addAction( {
+            editor.addAction( {
                 // An unique identifier of the contributed action.
                 id: 'upload',
 
@@ -152,7 +94,7 @@ route.on( 'code', function( url, params, unchanged ) {
                     writeableEditor: true,
                 }
             });
-            e.addAction( {
+            editor.addAction( {
                 id: 'add',
                 label: 'New File',
                 keyBindings: [ monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_N ],
@@ -164,7 +106,7 @@ route.on( 'code', function( url, params, unchanged ) {
                     writeableEditor: true,
                 }
             });
-            e.addAction( {
+            editor.addAction( {
                 id: 'close',
                 label: 'Close File',
                 keyBindings: [ monaco.KeyMod.CtrlCmd | monaco.KeyCode.Key_W ],
@@ -175,33 +117,27 @@ route.on( 'code', function( url, params, unchanged ) {
                     writeableEditor: true,
                 }
             });
-            e.addAction( {
-                id: 'close',
-                label: 'Close File',
-                keyBindings: [ monaco.KeyMod.CtrlCmd | monaco.KeyCode.US_COMMA ],
-                run: function( editor ) {
-                    var input = $( '<input />' ).desccomplete( {
-                        autoFocus: true,
-                        source: '/explorer/search',
-                        minLength: 2,
-                        focus: function( event, ui ) {
-                            return false;
-                        },
-                        select: function( event, ui ) {
-                            activeFile = ui.item.value;
-                            openFile( ui.item.value );
-                            dialog.dialog( 'close' );
-                        }
-                    });
-                    modal( {
-                        title: 'File search', content: input, onOpen: function() {
-                            input.focus();
-                        }
-                    });
+        });
+        $( '#editor' ).bindKey( 'ctrl+,', function() {
+            var input = $( '<input />' ).desccomplete( {
+                autoFocus: true,
+                source: '/explorer/search',
+                minLength: 2,
+                focus: function( event, ui ) {
+                    return false;
+                },
+                select: function( event, ui ) {
+                    activeFile = ui.item.value;
+                    openFile( ui.item.value );
+                    dialog.dialog( 'close' );
                 }
             });
-        });
-        $( '#editor' ).bindKey( 'ctrl+tab', function() {
+            modal( {
+                title: 'File search', content: input, onOpen: function() {
+                    input.focus();
+                }
+            });
+        }).bindKey( 'ctrl+tab', function() {
             var wasPrevious = false;
             for( var file in openFiles ) {
                 if( wasPrevious ) {
@@ -431,9 +367,7 @@ route.on( 'code', function( url, params, unchanged ) {
 
                 $.ajax( {
                     url: file, success: function( data ) {
-                        var session = monaco.editor.getModel( monaco.Uri.parse( file ) );
-                        if( !session )
-                            session = monaco.editor.createModel( data, mode, monaco.Uri.parse( file ) );
+                        var session = monaco.editor.createModel( data, mode );
                         session.onDidChangeContent( function( e ) {
                             if( session.getAlternativeVersionId() != openedFiles[ file ].data( 'lastSavedAt' ) ) {
                                 openedFiles[ file ].addClass( 'unsaved' );
@@ -450,9 +384,7 @@ route.on( 'code', function( url, params, unchanged ) {
                         setContent();
                     }, error: function( xhr ) {
                         if( xhr.status == 404 ) {
-                            var session = monaco.editor.getModel( monaco.Uri.parse( file ) );
-                            if( !session )
-                                session = monaco.editor.createModel( '', mode, monaco.Uri.parse( file ) );
+                            var session = monaco.editor.createModel( '', mode );
                             session.onDidChangeContent( function( e ) {
                                 if( session.getAlternativeVersionId() != openedFiles[ file ].data( 'lastSavedAt' ) ) {
                                     $( '#fileExplorer' ).find( '.node:has(> div > input[value="' + file + '"])' ).addClass( 'unsaved' );
@@ -500,7 +432,7 @@ route.on( 'code', function( url, params, unchanged ) {
                 editor.setModel( openedFiles[ activeFile ].data( 'session' ) );
             }
             else
-                editor.setModel( monaco.editor.createModel( '', 'text', activeFile ) );
+                editor.setModel( monaco.editor.createModel( '', 'text' ) );
             $( '#fileExplorer' ).tree( 'focus', activeFile );
             editor.focus();
         };

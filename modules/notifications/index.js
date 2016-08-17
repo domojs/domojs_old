@@ -1,4 +1,5 @@
 var EventEmitter=require('events');
+var debug=require('debug')('domojs:notification')
 exports.init = function (config, app)
 {
     var io = $('socket.io').listen(global.server);
@@ -31,10 +32,13 @@ exports.init = function (config, app)
         if(io2) 
             io2.sockets.emit.apply(io2.sockets, arguments);
     };
+
+    $.bus=bus;
     
    
    $.emitTo=function(eventName, to, message)
    {
+       debug('emitting '+eventName+' to '+to+' with the following message: ', message);
         io.to(to).emit(eventName, message);
         if(io2)
             io2.to(to).emit(eventName, message);
@@ -42,11 +46,11 @@ exports.init = function (config, app)
     
     $.on('connection', function(socket){
         socket.on('join', function(roomName){
-            console.log('joining '+roomName);
+            debug('joining '+roomName);
             socket.join(roomName);
         });
         socket.on('leave', function(roomName){
-            console.log('leaving '+roomName);
+            debug('leaving '+roomName);
             socket.leave(roomName);
         });
         
@@ -57,7 +61,10 @@ exports.init = function (config, app)
         socket.on('message', function(message){
             if(typeof(message)=='string')
                 message={text:message};
-            $.emit('message', message);
+            if(!message.date || message.date<new Date())
+                $.emit('message', message);
+            else
+                bus.emit('message', message);
         });
         
         socket.on('refresh', function(roomName){

@@ -1,3 +1,5 @@
+var debug=$('debug')('domojs:core');
+
 exports.init=function(config, app)
 {
 	var tiles=[];
@@ -33,7 +35,7 @@ exports.init=function(config, app)
 						if(exists)
 							tiles.push({text: file, background:'/assets/'+file+'/tile.png', url:'#'+file});
 						else
-							console.log('no file ./modules/'+file+'/assets/tile.png exists');
+							debug('no file ./modules/'+file+'/assets/tile.png exists');
 					});
 				else
 				{
@@ -44,7 +46,7 @@ exports.init=function(config, app)
 	});
 	$('fs').watch('./modules', {persistent:false}, function(event, fileName){
 		if(fileName)
-			console.log(fileName+' was '+event);
+			debug(fileName+' was '+event);
 		process.exit();
 	});
 }

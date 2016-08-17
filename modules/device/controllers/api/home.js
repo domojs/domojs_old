@@ -21,7 +21,6 @@ module.exports={
 			}
 			else if(typeof(status)!='undefined' && typeof(device.status)!='undefined')
 				return device.status(function(s){
-				    console.log(s);
 				    if(s && s.state && !s.color)
 				        s.color=s.state==status?'green':'red';
 					if(s && typeof(s[status])!='undefined')

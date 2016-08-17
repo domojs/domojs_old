@@ -91,7 +91,7 @@ exports.init=function(config)
                                                     nodes.push($.extend(node, {isLeaf:false}));
                                             });
     
-                                            res.send(nodes.concat(leaves));
+                                            res.send(200, nodes.concat(leaves));
                                     /*});
                                 }, function(err){
                                     debug(err);

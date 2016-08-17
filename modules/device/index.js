@@ -1,5 +1,5 @@
 var EventEmitter=require('events');
-
+var debug=$('debug')('domojs:device');
 devices={};
 var savedDevices=[];
 var initializing=true;
@@ -12,16 +12,44 @@ exports.init=function(config){
     $('fs').exists('./modules/device/devices.json', function(exists){
       if(!exists)  
         {
-            console.log('could not find file devices.json');
+            debug('could not find file devices.json');
             initializing=false;
             return ;
         }
-        console.log('loading devices');
+        debug('loading devices');
         savedDevices=require('./devices.json');
         $.eachAsync(savedDevices, function(index,item, next){
             require('./controllers/api/home.js').add(item, next);
         }, function(){
             initializing=false;
+        });
+    });
+    
+    $.io.of('/device').on('connection', function(socket){
+        var socketDevices=[];
+        socket.on('device', function(device){
+            device=$.extend(new EventEmitter(), device);
+            var commands={};
+            $.each(device.commands, function(i, cmd){
+                commands[cmd]=function(callback){
+                    socket.emit('command', {device:device.name, command:cmd});
+                    callback(204);
+                };
+            });
+            device.commands=commands;
+            socketDevices.push(device);
+            $.device(device);
+        });
+        
+        socket.on('disconnect', function(){
+            $.each(socketDevices, function(i, device){
+                device.remove();
+            });
+        });
+        
+        socket.on('status', function(status){
+            if(status.device==device.name)
+                device.emit('status', status.state);
         });
     });
 };
@@ -30,6 +58,12 @@ $.device=function register(device, body, callback)
 {
 	if(typeof(device)=='undefined')
 		return devices;
+    onStatus= function(state){
+        debug(device.name, 'is now in state',state);
+        $.emitTo('status', 'device:'+device.name, {device:device.name, state:state});
+        if(typeof(state)=='string')
+           $.emitTo('state:'+state, 'device:'+device.name, {device:device.name, state:state});
+    };
     if(callback)
     {
         device=new EventEmitter();
@@ -37,11 +71,12 @@ $.device=function register(device, body, callback)
         device.type=body.type;
         device.category=body.category;
         device.commands={};
-
         $.ajax({url:{hostname:'localhost', protocol:'http', port:global.port, pathname:'/js/device.js'}, success:function(data)
         {
+	    if(data.length>0 && data[0]=='<')
+		return;
             var deviceTypes={};
-            $('vm').runInContext(data, $('vm').createContext({$:$, deviceTypes:deviceTypes, console:{log:console.log, error:console.error}, process:process, Buffer:Buffer}), 'js/device.js'); 
+            $('vm').runInContext(data, $('vm').createContext({$:$, deviceTypes:deviceTypes, console:{log:debug, error:console.error}, process:process, Buffer:Buffer}), 'js/device.js'); 
             if(typeof(deviceTypes[device.type])!='undefined' && typeof(deviceTypes[device.type].onServerSave)!='undefined')
                 deviceTypes[device.type].onServerSave(device, body);
             $.device(device, body);
@@ -49,6 +84,9 @@ $.device=function register(device, body, callback)
         }});
         return;
     }
+    if(device instanceof EventEmitter)
+        device.on('status', onStatus);
+
     if(typeof(devices[device.type])=='undefined')
         Object.defineProperty(devices, device.type, {configurable:false, enumerable:device.type.indexOf('.')!==0, writable:false, value:[]});
     devices[device.type].push(device);
@@ -62,7 +100,7 @@ $.device=function register(device, body, callback)
         case 'switch':
             if(typeof(device.commands.toggle)=='undefined' && typeof(device.status)!='undefined')
             {
-                console.log('setting toggle command');
+                debug('setting toggle command');
                 device.commands.toggle=function(callback){
                     var self=this;
                     device.status(function(status){
@@ -98,7 +136,7 @@ $.device=function register(device, body, callback)
     if(device.subdevices)
     {
         $.each(device.subdevices, function(index,item){
-            register($.extend({}, item, {name: device.name+'.'+item.name}));
+            register($.extend(new EventEmitter(), item, {name: device.name+'.'+item.name}));
         });
     }
     if(body && !initializing)
@@ -106,7 +144,7 @@ $.device=function register(device, body, callback)
         savedDevices.push(body);
         $('fs').writeFile('./modules/device/devices.json', JSON.stringify(savedDevices), function(err){
             if(err)
-                console.log(err);
+                debug(err);
         });
     }
 }
@@ -124,7 +162,7 @@ $(function(req,res,next){
 					$('fs').readFile('./modules/'+file+'/device.js', {encoding:'utf8'},function(err, data){
 						if(err)
 						{
-							console.log(err);
+							debug(err);
 							next();
 							return;
 						}

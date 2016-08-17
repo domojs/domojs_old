@@ -1,4 +1,4 @@
-deviceTypes.rest={
+deviceTypes['rest']={
     name:'http',
     onChange:function(){
         return 'static';
@@ -59,7 +59,7 @@ deviceTypes.virtualState={
     },
     onAdd:function(){
         $('<li class="form-group">')
-            .append('<div class="col-sm-2"><input type="text" class="state form-control" placeholder="State" /></div>')
+            .append('<div class="col-sm-2"><input type="radio" name="default" class="default" /><input type="text" class="state form-control" placeholder="State" /></div>')
             .appendTo('#commands');
 
     },
@@ -67,7 +67,9 @@ deviceTypes.virtualState={
         var states=[];
         
         $('#commands li').each(function(index, item){
-            commands.push($('.state', item).val());
+            states.push($('.state', item).val());
+            if($('.default'.is(':checked')))
+                data.append('default', $('.state', item).val());
         });
         data.append('states', JSON.stringify(states));
     },
@@ -79,9 +81,13 @@ deviceTypes.virtualState={
             callback(device.state);
         };
         $.each(states, function(index, command){
-            device.commands[command]=function(){
-                device.state=command;
-                device.emit('status', command);
+            device.commands[command]=function(callback){
+                if(device.state!=command)
+                {
+                    device.state=command;
+                    device.emit('status', command);
+                    callback(200, device.state);
+                }
             };
         });
     }

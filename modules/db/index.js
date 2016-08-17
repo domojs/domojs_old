@@ -36,7 +36,18 @@ exports.init=function(config, app){
     
     function buildClient(){
         var db= redis.createClient(Number($.settings('db.port')), $.settings('db.host'), {});
-        
+        var quit=db.quit.bind(db);
+        var err = new Error();
+        var timeOut=setTimeout(function(){
+            if(!db._persistent)
+                debug(err.stack);
+            // quit();
+        }, 60000)
+        db.quit=function()
+        {
+            clearTimeout(timeOut);
+            quit();
+        }
         db.another=buildClient;
         db.on('error', function(error){
             console.log(error);
@@ -65,7 +76,7 @@ exports.init=function(config, app){
                 }
             }
             var args=[key];
-            if(sortKey!==false)
+            if(sortKey)
             {
                 args.push('BY');
                 args.push(sortKey);

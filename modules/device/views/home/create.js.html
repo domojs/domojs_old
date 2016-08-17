@@ -65,7 +65,8 @@
     
     $('#commandGroup .btn-primary').on('click', function(){
         if($('#type').val() && deviceTypes[$('#type').val()])
-            return deviceTypes[$('#type').val()].onAdd();
+            deviceTypes[$('#type').val()].onAdd();
+            return false;
     });
     
     $('#name').on('change', function(){

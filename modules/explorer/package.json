@@ -1,12 +1,11 @@
- {
-	"name":"explorer",
-	"version":"0.2.0",
-	"repository":{
-		"type":"git",
-		"url":"https://github.com/npenin/domojs.git"
-	},
-	"dependencies":
-	{
-		"nodegit":"nodegit/nodegit"
-	}
+{
+  "name": "explorer",
+  "version": "0.2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/npenin/domojs.git"
+  },
+  "dependencies": {
+    "monaco-editor": "latest"
+  }
 }
