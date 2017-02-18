@@ -34,3 +34,6 @@
 [submodule "weather"]
 	path = modules/weather
 	url = ./modules/weather
+[submodule "modules/rfx"]
+	path = modules/rfx
+	url = ./modules/rfx
