@@ -1,0 +1,17 @@
+{
+    "compileOnSave": true,
+    "compilerOptions": {
+        "sourceMap": true,
+        "experimentalDecorators": true,
+        "declaration": true,
+        "moduleResolution": "node",
+        "module": "commonjs",
+        "outDir": "dist"
+    },
+    "exclude": [
+        "gulpfile.ts",
+        "dist",
+        "modules",
+        "node_modules"
+    ]
+}

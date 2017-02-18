@@ -1,0 +1,23 @@
+{
+  "globalDependencies": {
+    "debug": "registry:dt/debug#0.0.0+20160317120654",
+    "express": "registry:dt/express#4.0.0+20160708185218",
+    "express-serve-static-core": "registry:dt/express-serve-static-core#4.0.0+20160829034835",
+    "form-data": "registry:dt/form-data#0.0.0+20160724024111",
+    "jquery": "registry:dt/jquery#1.10.0+20160704162008",
+    "mime": "registry:dt/mime#0.0.0+20160316155526",
+    "node": "registry:env/node#6.0.0+20160813135048",
+    "orchestrator": "registry:dt/orchestrator#0.0.0+20160316155526",
+    "q": "registry:dt/q#0.0.0+20160613154756",
+    "request": "registry:dt/request#0.0.0+20160726020908",
+    "serve-static": "registry:dt/serve-static#0.0.0+20160606155157",
+    "socket.io": "registry:dt/socket.io#1.4.4+20160317120654",
+    "underscore": "registry:dt/underscore#1.8.3+20161123125004",
+    "vinyl-buffer": "registry:dt/vinyl-buffer#0.0.0+20160316155526",
+    "vinyl-source-stream": "registry:dt/vinyl-source-stream#0.0.0+20160316155526"
+  },
+  "dependencies": {},
+  "globalDevDependencies": {
+    "gulp-concat": "registry:dt/gulp-concat#0.0.0+20160316155526"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "name": "node-cluster-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "debug": "^2.2.0",
+    "express": "^4.14.0",
+    "node-di2": "^1.0.2",
+    "orchestrator": "^0.3.7",
+    "sequencify": "0.0.7",
+    "socket.io": "^1.4.8",
+    "socket.io-client": "^1.4.8",
+    "underscore": "^1.8.3"
+  },
+  "bin": {
+    "domojs": "./cli.js"
+  },
+  "devDependencies": {
+    "browserify": "^13.1.0",
+    "deamdify": "^0.2.0",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-less": "^3.1.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-typescript": "^3.0.2",
+    "merge2": "^1.0.2",
+    "typescript": "^2.0.3",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
+  }
+}

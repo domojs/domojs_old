@@ -1,0 +1,12 @@
+{
+    "settings": {
+        "language": "fr"
+    },
+    "db": {
+        "host": "ana"
+    },
+    "users": null,
+    "core": {
+        "root": "modules/theme-default/views"
+    }
+}
