@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "newmodule": "modules/core/dist/newModule.js"
+    "newmodule": "node modules/core/dist/server/newModule.js"
   },
   "author": "",
   "license": "ISC",
