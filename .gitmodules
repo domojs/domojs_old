@@ -1,0 +1,36 @@
+[submodule "assets"]
+	path = assets
+	url = ./modules/assets
+[submodule "chat"]
+	path = chat
+	url = ./modules/chat
+[submodule "chat-date"]
+	path = chat-date
+	url = ./modules/chat-date
+[submodule "chat-utilities"]
+	path = chat-utilities
+	url = ./modules/chat-utilities
+[submodule "core"]
+	path = core
+	url = ./modules/core
+[submodule "db"]
+	path = db
+	url = ./modules/db
+[submodule "devices"]
+	path = devices
+	url = ./modules/devices
+[submodule "pioneer"]
+	path = pioneer
+	url = ./modules/pioneer
+[submodule "settings"]
+	path = settings
+	url = ./modules/settings
+[submodule "theme-default"]
+	path = theme-default
+	url = ./modules/theme-default
+[submodule "users"]
+	path = users
+	url = ./modules/users
+[submodule "weather"]
+	path = weather
+	url = ./modules/weather
