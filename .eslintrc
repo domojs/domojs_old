@@ -1,7 +1,7 @@
 {
     "rules": {
         "quotes": [
-            "warning", "single"
+            2, "single"
         ]
     }
 }
