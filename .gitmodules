@@ -1,39 +1,39 @@
 [submodule "assets"]
 	path = modules/assets
-	url = ./modules/assets
+	url = git@github.com:domojs/assets.git
 [submodule "chat"]
 	path = modules/chat
-	url = ./modules/chat
+	url = git@github.com:domojs/chat.git
 [submodule "chat-date"]
 	path = modules/chat-date
-	url = ./modules/chat-date
+	url = git@github.com:domojs/chat-date.git
 [submodule "chat-utilities"]
 	path = modules/chat-utilities
-	url = ./modules/chat-utilities
+	url = git@github.com:domojs/chat-utilities.git
 [submodule "core"]
 	path = modules/core
-	url = ./modules/core
+	url = git@github.com:domojs/core.git
 [submodule "db"]
 	path = modules/db
-	url = ./modules/db
+	url = git@github.com:domojs/db.git
 [submodule "devices"]
 	path = modules/devices
-	url = ./modules/devices
+	url = git@github.com:domojs/devices.git
 [submodule "pioneer"]
 	path = modules/pioneer
-	url = ./modules/pioneer
+	url = git@github.com:domojs/domojs-pioneer.git
 [submodule "settings"]
 	path = modules/settings
-	url = ./modules/settings
+	url =   git@github.com:domojs/settings.git
 [submodule "theme-default"]
 	path = modules/theme-default
-	url = ./modules/theme-default
+	url = git@github.com:domojs/theme-default.git
 [submodule "users"]
 	path = modules/users
-	url = ./modules/users
+	url =  git@github.com:domojs/domojs-users.git
 [submodule "weather"]
 	path = modules/weather
-	url = ./modules/weather
+	url = git@github.com:domojs/domojs-weather.git
 [submodule "modules/rfx"]
 	path = modules/rfx
-	url = ./modules/rfx
+	url =  git@github.com:domojs/domojs-rfxcom.git

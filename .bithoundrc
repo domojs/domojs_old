@@ -1,0 +1,8 @@
+{
+  "ignore": [
+    "**/deps/**",
+    "**/node_modules/**",
+    "dist/**",
+    "src/**/typings/**"
+}
+    
