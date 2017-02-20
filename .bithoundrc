@@ -1,6 +1,6 @@
 {
   "critics": {
-    "lint": {"engine": "eslint"}
+    "lint": {"engine": "jshint"}
   },
   "ignore": [
     "**/node_modules/**",
