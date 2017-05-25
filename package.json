@@ -13,6 +13,12 @@
     "mime": "^1.3.4",
     "mvc": "npenin/node-mvc",
     "socket.io": "latest",
-    "socket.io-client": "latest"
-  }
+    "socket.io-client": "latest",
+    "snyk": "^1.30.1"
+  },
+  "scripts": {
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
+  },
+  "snyk": true
 }
