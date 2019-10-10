@@ -14,7 +14,7 @@
     "mvc": "npenin/node-mvc",
     "socket.io": "latest",
     "socket.io-client": "latest",
-    "snyk": "^1.30.1"
+    "snyk": "^1.234.0"
   },
   "scripts": {
     "snyk-protect": "snyk protect",
