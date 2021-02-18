@@ -10,7 +10,7 @@
     "connect": "latest",
     "debug": "latest",
     "jnode": "npenin/jnode",
-    "mime": "^1.3.4",
+    "mime": "^2.5.2",
     "mvc": "npenin/node-mvc",
     "socket.io": "latest",
     "socket.io-client": "latest",
